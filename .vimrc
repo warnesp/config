@@ -114,3 +114,5 @@ call NERDTreeHighlightFile('c', 'red', 'none', 'red', '#151515')
 
 call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
+let NERDTreeIgnore = ['\CMakeFiles$', '\CMakeCache.txt$', '\~$', '\.a$']
+
