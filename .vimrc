@@ -67,6 +67,9 @@ set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 "command Banner :r ~/Banner.txt
 "map <F4> :Banner<CR>
 
+"clear search
+map <C-l> :noh<CR>
+
 "build project
 command CMake !mkdir -p build && cd build && cmake .. && make
 map <F5> :CMake<CR>
