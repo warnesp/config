@@ -47,9 +47,9 @@ set shiftwidth=4
 set autoindent
 
 """use a mouse
-if has('mouse')
-	set mouse=a
-endif
+""if has('mouse')
+""	set mouse=a
+""endif
 
 """searching
 set incsearch
