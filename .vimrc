@@ -74,6 +74,14 @@ map <C-l> :noh<CR>
 command CMake !mkdir -p build && cd build && cmake .. && make
 map <F5> :CMake<CR>
 
+"clean project
+command GitClean !git clean -dfX
+map <C-F5> :GitClean<CR>
+
+"save progress
+command GitAdd !git add .
+map <C-s> :wa<CR>:GitAdd<CR>
+
 "use ctrl+F12 to generate tags for the current project
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
 set tags+=~/.vim/tags/project
