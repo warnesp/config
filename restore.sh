@@ -9,7 +9,7 @@ then
   cp ~/config/.vimrc ~/
 
   #setup NERDTree
-  mkdir -p ".vim/pack/vendor/start/nerdtree"
+  mkdir -p "~/.vim/pack/vendor/start/nerdtree"
   if command -v git > /dev/null
   then
 
