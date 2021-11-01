@@ -9,11 +9,12 @@ then
   cp ~/config/.vimrc ~/
 
   #setup NERDTree
-  mkdir -p "~/.vim/pack/vendor/start/nerdtree"
+  mkdir -p "~/.vim/pack/vendor/start/nerdtree"mkdir -p "$HOME/.vim/plugins/nerdtree"
+  
   if command -v git > /dev/null
   then
-
     [ -d "$HOME/.vim/pack/vendor/start/nerdtree" ] && rm -rf "$HOME/.vim/pack/vendor/start/nerdtree" && git clone -q https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree || echo "Failed to get nerdtree"
+    [ -d /etc/redhat-release ] && rm -rf "$HOME/.vim/plugins/nerdtree" && cp "$HOME/.vim/pack/vendor/start/nerdtree" "$HOME/.vim/plugins/nerdtree"
   fi
 fi
 
