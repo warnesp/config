@@ -124,3 +124,8 @@ call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
 let NERDTreeIgnore = ['\CMakeFiles$', '\CMakeCache.txt$', '\~$', '\.a$']
 
+"""""uncrustify
+autocmd FileType c noremap <buffer> <c-f> :call Uncrustify('c')<CR>
+autocmd FileType c vnoremap <buffer> <c-f> :call RangeUncrustify('c')<CR>
+autocmd FileType cpp noremap <buffer> <c-f> :call Uncrustify('cpp')<CR>
+autocmd FileType cpp vnoremap <buffer> <c-f> :call RangeUncrustify('cpp')<CR>
