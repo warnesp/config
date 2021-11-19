@@ -5,7 +5,7 @@
 cp -r home/fonts/* $HOME/.fonts
 cp -r i3status $HOME/.config/
 cp -r i3 $HOME/.config/
-cp -r shortcuts $HOME/shortcuts
+cp -r shortcuts $HOME/
 
 #vim
 if  command -v vim > /dev/null 
