@@ -21,7 +21,7 @@ then
             [ -f /etc/redhat-release ] && echo "Installing uncrustify for RHEL" && mkdir -p "$HOME/.vim/plugins/uncrustify" && rm -rf "$HOME/.vim/plugins/uncrustify" && cp -r "$HOME/.vim/pack/vendor/start/uncrustify" "$HOME/.vim/plugins/uncrustify" 
         else
             echo "No uncrustify"
-        fi
+       fi
 
     fi
 
@@ -40,4 +40,3 @@ then
     command -v curl > /dev/null && curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     ###make sure to call :PlugInstall after running nvim for the first time
 fi
-
