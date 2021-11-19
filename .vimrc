@@ -1,5 +1,7 @@
 set nocompatible			"disable old vi bugs
 
+
+
 colorscheme slate
 "colorscheme delek
 "colorscheme elflord
@@ -102,6 +104,7 @@ filetype plugin on
 "let OmniCpp_DefaultNamespaces = ["std"]
 
 """""NERDTree
+set rtp+=~/.vim/plugins/nerdtree
 "autocmd vimenter * NERDTree		"start NERDTree when vim starts with a file
 map <C-a> :NERDTreeToggle<CR>
 
@@ -123,4 +126,11 @@ call NERDTreeHighlightFile('c', 'red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
 let NERDTreeIgnore = ['\CMakeFiles$', '\CMakeCache.txt$', '\~$', '\.a$']
+
+"""""uncrustify
+set rtp+=~/.vim/plugins/decrustify
+autocmd FileType c noremap <buffer> <c-f> :call Uncrustify('c')<CR>
+autocmd FileType c vnoremap <buffer> <c-f> :call RangeUncrustify('c')<CR>
+autocmd FileType cpp noremap <buffer> <c-f> :call Uncrustify('cpp')<CR>
+autocmd FileType cpp vnoremap <buffer> <c-f> :call RangeUncrustify('cpp')<CR>
 
