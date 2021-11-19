@@ -1,6 +1,14 @@
 #!/bin/bash
 tempbg='/tmp/screen.png'
 icon="$HOME/.config/i3/icon.png"
+
+#call ImageMagick
+if ! command -v import &> /dev/null
+then
+    echo "ImageMagick not installed"
+    exit
+fi
+
 import -window root "$tempbg"
 
 #scrot "$tmpbg"
