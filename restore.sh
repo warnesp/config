@@ -10,7 +10,7 @@ cp -r shortcuts $HOME/
 #i3 config
 if command -v i3 > /dev/null
 then
-  cp -r home/fonts/* $HOME/.fonts
+  mkdir -p "$HOME/.fonts" && cp -r home/fonts/* $HOME/.fonts/
   cp -r i3status $HOME/.config/
   cp -r i3 $HOME/.config/
 else
