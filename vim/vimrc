@@ -38,7 +38,7 @@ set statusline+=%{&ff}]		"file format
 set statusline+=%y			"filetype
 set statusline+=%=			"left/right separator
 set statusline+=[%b]\ 	"value of character under cursor
-set statusline+=%c			"cursor column
+set statusline+=%c\ 			"cursor column
 set statusline+=%l/%L		"cursor line/total lines
 set statusline+=\ %P		"percentage through file
 
