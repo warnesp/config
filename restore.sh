@@ -25,6 +25,10 @@ then
   echo "Restoring VIM settings"
   cp $HOME/config/vim/vimrc $HOME/.vimrc
 
+  # setup alternate swap location
+  mkdir -p $HOME/.vim/swapfiles
+  mkdir -p $HOME/.vim/backups
+
 
   if command -v git > /dev/null
   then

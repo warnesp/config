@@ -88,6 +88,10 @@ map <C-s> :wa<CR>:GitAdd<CR>
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
 set tags+=~/.vim/tags/project
 
+
+set backupdir=$HOME/.vim/backups//
+set directory=$HOME/.vim/swapfiles//
+
 """plugins
 set nocp
 filetype plugin on
