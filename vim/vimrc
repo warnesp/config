@@ -73,7 +73,7 @@ set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 map <C-l> :noh<CR>
 
 "build project
-command CMake !mkdir -p build && cd build && cmake .. && make
+command CMake !mkdir -p build && cd build && cmake .. && make -j8
 map <F5> :CMake<CR>
 
 "clean project
