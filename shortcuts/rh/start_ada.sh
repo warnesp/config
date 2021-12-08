@@ -1,3 +1,17 @@
 #!/bin/bash
-PATH=/opt/GNAT/2021/bin/:$PATH
+
+#GNAT_LOCATION="/opt/GNAT/2021"
+#GNAT_GCC_VERSION="10.3.1"
+
+GNAT_LOCATION="/opt/GNAT/21.1"
+#GNAT_GCC_VERSION="9.3.1"
+
+PATH="$GNAT_LOCATION/bin:$PATH"
+
+#export LD_LIBRARY_PATH="$GNAT_LOCATION/lib:$GNAT_LOCATION/lib64:/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64:$LD_LIBRARY_PATH"
+
+#export CPATH="$GNAT_LOCATION/lib/gcc/x86_64-pc-linux-gnu/$GNAT_GCC_VERSION:$GNAT_LOCATION/lib/gcc/x86_64-pc-linux-gnu/$GNAT_GCC_VERSION/gcc-include:$CPATH"
+#export CPLUS_INCLUDE_PATH="$GNAT_LOCATION/include/c++/$GNAT_GCC_VERSION:$CPLUS_INCLUDE_PATH:$GNAT_LOCATION/include/python2.7/"
+#export LIBRARY_PATH="$GNAT_LOCATION/lib:$GNAT_LOCATION/lib64/:$LIBRARY_PATH"
+
 bash

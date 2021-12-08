@@ -6,6 +6,7 @@
 
 ##restore config
 cp -r shortcuts $HOME/
+mkdir -p $HOME/shortcuts/bin
 
 #i3 config
 if command -v i3 > /dev/null
