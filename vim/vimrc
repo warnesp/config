@@ -140,3 +140,15 @@ autocmd FileType cpp vnoremap <buffer> <c-f> :call RangeUncrustify('cpp')<CR>
 
 """""doxygen
 set rtp+=~/.vim/plugins/doxygen
+
+let g:DoxygenToolkit_briefTag_pre="\\brief "
+let g:DoxygenToolkit_paramTag_pre="\\param "
+let g:DoxygenToolkit_returnTag="\\return "
+
+
+
+"""""fswitch
+set rtp+=~/.vim/plugins/fswitch
+
+map <F4> :FSHere<CR>
+

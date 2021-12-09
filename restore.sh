@@ -56,6 +56,9 @@ then
         #setup NERDTree
         RestorePlugin "nerdtree" "https://github.com/preservim/nerdtree.git"
 
+        #setup FSwitch
+        RestorePlugin "fswitch" "https://github.com/derekwyatt/vim-fswitch.git"
+
         #setup uncrustify
         if command -v uncrustify > /dev/null ; then
             RestorePlugin "uncrustify" "https://github.com/cofyc/vim-uncrustify.git" 
