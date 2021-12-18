@@ -71,7 +71,11 @@ set tags+=~/.vim/tags/project
 ""Plugin stuff
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'https://github.com/scrooloose/nerdtree'
+  Plug 'https://github.com/derekwyatt/vim-fswitch'
+  Plug 'https://github.com/vim-scripts/DoxygenToolkit.vim'
+  Plug 'https://github.com/vim-scripts/OmniCppComplete'
 call plug#end()
+
 
 """""NERDTree
 "autocmd vimenter * NERDTree		"start NERDTree when vim starts with a file
@@ -94,5 +98,5 @@ call NERDTreeHighlightFile('c', 'red', 'none', 'red', '#151515')
 
 call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
-
+map <F4> :FSHere<CR>
 
