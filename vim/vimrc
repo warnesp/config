@@ -112,6 +112,8 @@ Plug 'preservim/NERDTree'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'cofyc/vim-uncrustify'
 Plug 'vim-scripts/DoxygenToolkit.vim'
+"Plug 'prabirshrestha/vim-lsp'
+"Plug 'mattn/vim-lsp-settings'
 call plug#end()
 
 """""NERDTree
