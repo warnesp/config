@@ -4,26 +4,6 @@
 echo "restoring for RHEL"
 
 
-function RestorePlugin() 
-{
-    local pluginName="$1"
-    local pluginUrl="$2"
-
-    mkdir -p "$HOME/.vim/pack/vendor/start/$pluginName" &&
-        rm -rf "$HOME/.vim/pack/vendor/start/$pluginName" && 
-    git clone --depth 1 -q $pluginUrl $HOME/.vim/pack/vendor/start/$pluginName || 
-    echo "Failed to get $pluginName"
-
-    [ -f /etc/redhat-release ] && 
-    echo "Installing $pluginName for RHEL" && 
-    mkdir -p "$HOME/.vim/plugins/$pluginName" && 
-    rm -rf "$HOME/.vim/plugins/$pluginName" && 
-    cp -r "$HOME/.vim/pack/vendor/start/$pluginName" "$HOME/.vim/plugins/$pluginName" 
-
-
-}
-
-
 ##restore config
 cp -r shortcuts $HOME/
 mkdir -p $HOME/shortcuts/bin
@@ -49,29 +29,10 @@ then
     # setup alternate swap location
     mkdir -p $HOME/.vim/swapfiles
     mkdir -p $HOME/.vim/backups
+    mkdir -p $HOME/.vim/autoload
 
-
-    if command -v git > /dev/null
-    then
-        #setup NERDTree
-        RestorePlugin "nerdtree" "https://github.com/preservim/nerdtree.git"
-
-        #setup FSwitch
-        RestorePlugin "fswitch" "https://github.com/derekwyatt/vim-fswitch.git"
-
-        #setup uncrustify
-        if command -v uncrustify > /dev/null ; then
-            RestorePlugin "uncrustify" "https://github.com/cofyc/vim-uncrustify.git" 
-        else
-            echo "No uncrustify"
-        fi
-        #setup Doxygen
-        if command -v doxygen > /dev/null ; then 
-            RestorePlugin "doxygen" "https://github.com/vim-scripts/DoxygenToolkit.vim.git"
-        else
-            echo "No doxygen"
-        fi
-    fi
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 else
     echo "No vim"
 fi
