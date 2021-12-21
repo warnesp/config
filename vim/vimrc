@@ -96,17 +96,6 @@ set directory=$HOME/.vim/swapfiles//
 set nocp
 filetype plugin on
 
-"""""OmniCpp
-"set tags+=~/.vim/tags/cpp
-"let OmniCpp_NamespaceSearch = 1
-"let OmniCpp_GlobalScopeSearch = 1
-"let OmniCpp_ShowAccess = 1
-"let OmniCpp_ShowPrototypeInAbbr = 1
-"let OmniCpp_MayCompleteDot = 1
-"let OmniCpp_MayCompleteArrow = 1
-"let OmniCpp_MayCompleteScope = 1
-"let OmniCpp_DefaultNamespaces = ["std"]
-
 call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'derekwyatt/vim-fswitch'
@@ -114,7 +103,29 @@ Plug 'cofyc/vim-uncrustify'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 "Plug 'prabirshrestha/vim-lsp'
 "Plug 'mattn/vim-lsp-settings'
+Plug 'vim-scripts/OmniCppComplete'
 call plug#end()
+
+
+"""""OmniCpp
+"" get std headers
+" cp -R /usr/include/c++/$GCC_VERSION ~/.vim/cpp_src
+" # it is not necessary to rename headers without an extension
+" # replace the 'namespace std _GLIBCXX_VISIBILITY(default)' with 'namespace std'
+" find . -type f | xargs sed -i 's/namespace std _GLIBCXX_VISIBILITY(default)/namespace std/'
+" ctags -f cpp_tags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -I _GLIBCXX_NOEXCEPT cpp_src
+set tags+=~/.vim/tags/cpp
+set tags+=~/.vim/tags/cpp_tags
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
 
 """""NERDTree
 "autocmd vimenter * NERDTree		"start NERDTree when vim starts with a file
