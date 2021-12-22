@@ -107,6 +107,7 @@ Plug 'vim-scripts/OmniCppComplete'
 Plug 'junegunn/fzf' 
 Plug 'junegunn/fzf.vim'
 "Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'yegappan/taglist'
 call plug#end()
 
 
@@ -187,5 +188,15 @@ let g:fzf_tags_command = 'ctags -R'
 
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+"""" taglist
+nnoremap <silent> <F8> :TlistToggle<CR>
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_WinWidth = 45
+let Tlist_Display_Prototype = 1
+
+nnoremap <silent> <c-F7> :TlistAddFilesRecursive src *.cpp<CR> :TlistAddFilesRecursive include *.h<CR>
+nnoremap <silent> <F7> :TlistUpdate<CR>
 
 
