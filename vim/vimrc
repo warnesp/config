@@ -106,6 +106,7 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'junegunn/fzf' 
 Plug 'junegunn/fzf.vim'
+"Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 
@@ -167,6 +168,7 @@ let g:DoxygenToolkit_briefTag_pre="\\brief "
 let g:DoxygenToolkit_paramTag_pre="\\param "
 let g:DoxygenToolkit_returnTag="\\return "
 
+map <c-F9> :Dox<CR>
 
 
 """""fswitch
