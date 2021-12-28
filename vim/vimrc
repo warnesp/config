@@ -77,12 +77,9 @@ command CMake !PROD_DIR=$PWD; mkdir -p "/tmp/build/$(basename $PWD)" && cd "/tmp
 map <F5> :CMake<CR>
 
 "clean project
-command GitClean !git clean -dfX
-map <C-F5> :GitClean<CR>
-
-"save progress
-command GitAdd !git add .
-map <C-s> :wa<CR>:GitAdd<CR>
+command CleanBuild !PROD_DIR=$PWD; rm -r "/tmp/build/$(basename $PWD)/"
+"map <C-F5> :Git clean -dfX<CR>:CleanBuild<CR> 
+map <C-F5> :CleanBuild<CR> 
 
 "use ctrl+F12 to generate tags for the current project
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
@@ -108,7 +105,26 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 "Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'yegappan/taglist'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/syntastic'
 call plug#end()
+
+
+"""""Syntastic
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = '--std=c++11'
+let g:syntastic_cpp_cppcheck_args = '--std=c++11 --language=c++'
+let g:syntastic_cpp_checkers = ['cppcheck', 'gcc']
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 
 """""OmniCpp
