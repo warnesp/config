@@ -1,6 +1,15 @@
 
 syntax enable
 
+""Plugin stuff
+call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'https://github.com/scrooloose/nerdtree'
+  Plug 'https://github.com/derekwyatt/vim-fswitch'
+  Plug 'https://github.com/vim-scripts/DoxygenToolkit.vim'
+  Plug 'https://github.com/vim-scripts/OmniCppComplete'
+call plug#end()
+
+
 
 "tab stuff
 set tabstop=4
@@ -67,14 +76,6 @@ map <F5> :CMake<CR>
 "use ctrl+F12 to generate tags for the current project
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
 set tags+=~/.vim/tags/project
-
-""Plugin stuff
-call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'https://github.com/scrooloose/nerdtree'
-  Plug 'https://github.com/derekwyatt/vim-fswitch'
-  Plug 'https://github.com/vim-scripts/DoxygenToolkit.vim'
-  Plug 'https://github.com/vim-scripts/OmniCppComplete'
-call plug#end()
 
 
 """""NERDTree
