@@ -107,6 +107,10 @@ command CleanBuild !PROD_DIR=$PWD; rm -r "/tmp/build/$(basename $PWD)/"
 "map <C-F5> :Git clean -dfX<CR>:CleanBuild<CR> 
 map <C-F5> :CleanBuild<CR> 
 
+"run tests
+command RunTest !PROD_DIR=$PWD; ctest --test-dir "/tmp/build/$(basename $PWD)/"
+map <F6> :RunTest<CR>
+
 "use ctrl+F12 to generate tags for the current project
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
 set tags+=~/.vim/tags/project
@@ -159,7 +163,7 @@ set completeopt=menuone,menu,longest,preview
 
 """""NERDTree
 "autocmd vimenter * NERDTree		"start NERDTree when vim starts with a file
-map <C-a> :NERDTreeToggle<CR>
+map <C-p> :NERDTreeToggle<CR>
 
 "start NERDTree when vim starts without a file
 autocmd vimenter StdinReadPre * let s:std_in=1
