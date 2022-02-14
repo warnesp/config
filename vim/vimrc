@@ -99,11 +99,11 @@ set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 map <C-l> :noh<CR>
 
 "build project
-command CMake !PROD_DIR=$PWD; mkdir -p "/tmp/build/$(basename $PWD)" && cd "/tmp/build/$(basename $PWD)" && cmake $PROD_DIR && make -j8
+command CMake !PROD_DIR=$PWD; mkdir -p "/tmp/build/$(basename $PWD)" && cd "/tmp/build/$(basename $PWD)" && cmake $PROD_DIR -DENABLE_RTI=ON && make -j8
 map <F5> :CMake<CR>
 
 "clean project
-command CleanBuild !PROD_DIR=$PWD; rm -r "/tmp/build/$(basename $PWD)/"
+command CleanBuild !PROD_DIR=$PWD; rm -rf "/tmp/build/$(basename $PWD)/"
 "map <C-F5> :Git clean -dfX<CR>:CleanBuild<CR> 
 map <C-F5> :CleanBuild<CR> 
 
@@ -129,10 +129,10 @@ let g:airline#extensions#taglist#enabled = 0
 
 
 let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = '--std=c++11'
+let g:syntastic_cpp_compiler_options = '--std=c++11 -i /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp/'
 let g:syntastic_cpp_cppcheck_args = '--std=c++11 --language=c++'
-let g:syntastic_cpp_cppclean_args = '-i /home/pwarnes/dev/spl/include'
-let g:syntastic_cpp_gcc_args = '-Wall -Wextra'
+let g:syntastic_cpp_cppclean_args = '-i /home/pwarnes/dev/spl/include -I /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp'
+let g:syntastic_cpp_gcc_args = '-Wall -Wextra '
 let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'cpplint' ]
 let g:syntastic_cpp_check_header = 0
 let g:syntastic_always_populate_loc_list = 1
