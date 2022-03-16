@@ -57,6 +57,7 @@ set statusline+=[%n%H%M%R%W]	"Display what buffer, if it is help, if modified, i
 set statusline+=[%{strlen(&fenc)?&fenc:'none'},	"file encoding
 set statusline+=%{&ff}]		"file format
 set statusline+=%y			"filetype
+set statusline+=%{FugitiveStatusline()}
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
