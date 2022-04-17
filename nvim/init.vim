@@ -7,6 +7,12 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'https://github.com/derekwyatt/vim-fswitch'
   Plug 'https://github.com/vim-scripts/DoxygenToolkit.vim'
   Plug 'https://github.com/vim-scripts/OmniCppComplete'
+  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/syntastic'
+  Plug 'junegunn/fzf' 
+  Plug 'junegunn/fzf.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 
@@ -45,6 +51,13 @@ set statusline+=[%n%H%M%R%W]	"Display what buffer, if it is help, if modified, i
 set statusline+=[%{strlen(&fenc)?&fenc:'none'},	"file encoding
 set statusline+=%{&ff}]		"file format
 set statusline+=%y			"filetype
+set statusline+=%{FugitiveStatusline()}
+
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 set statusline+=%=			"left/right separator
 set statusline+=[%b]\ 	"value of character under cursor
 set statusline+=%c			"cursor column
@@ -68,19 +81,37 @@ set wildmenu				"menu when tab complete
 set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 "set lazyredraw	"don't reraw during macros
 
-
+"""" C++ stuff
 "build project
-command CMake !mkdir -p build && cd build && cmake .. && make
+command CMake !PROD_DIR=$PWD; mkdir -p "/tmp/build/$(basename $PWD)" && cd "/tmp/build/$(basename $PWD)" && cmake $PROD_DIR -DENABLE_RTI=ON && make -j8
 map <F5> :CMake<CR>
+
+"clean project
+command CleanBuild !PROD_DIR=$PWD; rm -rf "/tmp/build/$(basename $PWD)/"
+"map <C-F5> :Git clean -dfX<CR>:CleanBuild<CR> 
+map <C-F5> :CleanBuild<CR> 
+
+"run tests
+command RunTest !PROD_DIR=$PWD; ctest --test-dir "/tmp/build/$(basename $PWD)/"
+map <F6> :RunTest<CR>
 
 "use ctrl+F12 to generate tags for the current project
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
 set tags+=~/.vim/tags/project
 
 
+set backupdir=$HOME/.vim/backups//
+set directory=$HOME/.vim/swapfiles//
+
+"""""airline status
+
+"let g:airline#extensions#tagbar#enabled = 0
+"let g:airline#extensions#taglist#enabled = 0
+
+
 """""NERDTree
 "autocmd vimenter * NERDTree		"start NERDTree when vim starts with a file
-map <C-a> :NERDTreeToggle<CR>
+map <C-p> :NERDTreeToggle<CR>
 
 "start NERDTree when vim starts without a file
 autocmd vimenter StdinReadPre * let s:std_in=1
@@ -99,5 +130,55 @@ call NERDTreeHighlightFile('c', 'red', 'none', 'red', '#151515')
 
 call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
+""""""Vim switch
+
 map <F4> :FSHere<CR>
+
+
+"""""Syntastic
+
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = '--std=c++11 -i /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp/'
+let g:syntastic_cpp_cppcheck_args = '--std=c++11 --language=c++'
+let g:syntastic_cpp_cppclean_args = '-i /home/pwarnes/dev/spl/include -I /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp'
+let g:syntastic_cpp_gcc_args = '-Wall -Wextra '
+let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'cpplint' ]
+let g:syntastic_cpp_check_header = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+
+"""""doxygen
+let g:DoxygenToolkit_briefTag_pre="\\brief "
+let g:DoxygenToolkit_paramTag_pre="\\param "
+let g:DoxygenToolkit_returnTag="\\return "
+
+map <c-F9> :Dox<CR>
+
+
+""""fzf
+map <C-f> :GFiles<CR>
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+"""" 
+nnoremap <silent> <F8> :TlistToggle<CR>
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_WinWidth = 45
+let Tlist_Display_Prototype = 1
+
+nnoremap <silent> <c-F7> :TlistAddFilesRecursive src *.cpp<CR> :TlistAddFilesRecursive include *.h<CR>
+nnoremap <silent> <F7> :TlistUpdate<CR>
+
+
 

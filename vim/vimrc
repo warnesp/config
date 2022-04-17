@@ -128,7 +128,6 @@ let g:airline#extensions#taglist#enabled = 0
 
 """""Syntastic
 
-
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = '--std=c++11 -i /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp/'
 let g:syntastic_cpp_cppcheck_args = '--std=c++11 --language=c++'
@@ -204,7 +203,6 @@ map <c-F9> :Dox<CR>
 
 
 """""fswitch
-""set rtp+=~/.vim/plugins/fswitch
 
 map <F4> :FSHere<CR>
 
