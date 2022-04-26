@@ -35,3 +35,6 @@ else
   echo "No nvim"
 fi
 
+# face icon
+cp ~/.face ~/config/home/face
+

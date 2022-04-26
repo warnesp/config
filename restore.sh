@@ -52,3 +52,7 @@ then
 else
     echo "No NVIM"
 fi
+
+#face
+cp ~/config/home/face ~/.face
+
