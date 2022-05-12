@@ -2,17 +2,28 @@
 syntax enable
 
 ""Plugin stuff
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('$HOME/.local/share/nvim/plugged')
   Plug 'https://github.com/scrooloose/nerdtree'
   Plug 'https://github.com/derekwyatt/vim-fswitch'
   Plug 'https://github.com/vim-scripts/DoxygenToolkit.vim'
-  Plug 'https://github.com/vim-scripts/OmniCppComplete'
+"  Plug 'https://github.com/vim-scripts/OmniCppComplete'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/syntastic'
   Plug 'junegunn/fzf' 
   Plug 'junegunn/fzf.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'https://github.com/Mofiqul/dracula.nvim'
+  Plug 'https://github.com/preservim/tagbar'
+
+  ""C++ lsp
+""  Plug 'neovim/nvim-lsp' " nvim-lsp
+
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "pip3 install --user pynvim
+  Plug 'lighttiger2505/deoplete-vim-lsp'
+  Plug 'jackguo380/vim-lsp-cxx-highlight'
 call plug#end()
 
 
@@ -25,7 +36,11 @@ set expandtab
 set autoindent
 
 "colorscheme slate
-colorscheme delek
+colorscheme dracula
+set background=dark
+
+""set t_Co=256
+""set t_ut=
 
 filetype on
 
@@ -83,21 +98,21 @@ set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 
 """" C++ stuff
 "build project
-command CMake !PROD_DIR=$PWD; mkdir -p "/tmp/build/$(basename $PWD)" && cd "/tmp/build/$(basename $PWD)" && cmake $PROD_DIR -DENABLE_RTI=ON && make -j8
+command CMake term PROD_DIR=$PWD; mkdir -p "$HOME/build/$(basename $PWD)" && cd "$HOME/build/$(basename $PWD)" && cmake $PROD_DIR -DCMAKE_EXPORT_COMPILE_COMMANDS=YES && ln -sf $HOME/build/$(basename $PWD)/compile_commands.json $PROD_DIR/compile_commands.json && make -j8
 map <F5> :CMake<CR>
 
 "clean project
-command CleanBuild !PROD_DIR=$PWD; rm -rf "/tmp/build/$(basename $PWD)/"
+command CleanBuild !PROD_DIR=$PWD; rm -rf "$HOME/build/$(basename $PWD)/"
 "map <C-F5> :Git clean -dfX<CR>:CleanBuild<CR> 
-map <C-F5> :CleanBuild<CR> 
+map <F29> :CleanBuild<CR> 
 
 "run tests
-command RunTest !PROD_DIR=$PWD; ctest --test-dir "/tmp/build/$(basename $PWD)/"
+command RunTest term PROD_DIR=$PWD; ctest --test-dir "$HOME/build/$(basename $PWD)/"
 map <F6> :RunTest<CR>
 
 "use ctrl+F12 to generate tags for the current project
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.vim/tags/project --extra=+q .<CR>
-set tags+=~/.vim/tags/project
+map <F36> :term ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ~/.config/tags/project --extra=+q .<CR>
+set tags+=~/.config/tags/project
 
 
 set backupdir=$HOME/.vim/backups//
@@ -105,8 +120,8 @@ set directory=$HOME/.vim/swapfiles//
 
 """""airline status
 
-"let g:airline#extensions#tagbar#enabled = 0
-"let g:airline#extensions#taglist#enabled = 0
+"let g:airline#extensions#tagbar#enabled = 1
+"let g:airline#extensions#taglist#enabled = 1
 
 
 """""NERDTree
@@ -120,12 +135,12 @@ autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
 	exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
-
-call NERDTreeHighlightFile('cpp', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('h', 'darkgreen', 'none', 'darkgreen', '#151515')
+""' guibg='. a:guibg .
+call NERDTreeHighlightFile('cpp', 'lightgreen', 'none', 'lightgreen', '#151515')
+call NERDTreeHighlightFile('h', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('c', 'red', 'none', 'red', '#151515')
 
 call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
@@ -134,13 +149,18 @@ call NERDTreeHighlightFile('txt', 'yellow', 'none', 'yellow', '#151515')
 
 map <F4> :FSHere<CR>
 
+augroup mycppfiles
+  au!
+  au BufEnter *.h let b:fswitchdst  = 'cpp,cxx,c'
+  au BufEnter *.cpp let b:fswitchdst  = 'h,hpp,hxx'
+augroup END
 
 """""Syntastic
 
 let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = '--std=c++11 -i /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp/'
+let g:syntastic_cpp_compiler_options = '--std=c++11 -i $HOME/rti_connext_dds-6.1.0/include/ndds/hpp/'
 let g:syntastic_cpp_cppcheck_args = '--std=c++11 --language=c++'
-let g:syntastic_cpp_cppclean_args = '-i /home/pwarnes/dev/spl/include -I /home/pwarnes/rti_connext_dds-6.1.0/include/ndds/hpp'
+let g:syntastic_cpp_cppclean_args = '-i $HOME/dev/spl/include -I $HOME/rti_connext_dds-6.1.0/include/ndds/hpp'
 let g:syntastic_cpp_gcc_args = '-Wall -Wextra '
 let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'cpplint' ]
 let g:syntastic_cpp_check_header = 0
@@ -171,14 +191,38 @@ let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
 """" 
-nnoremap <silent> <F8> :TlistToggle<CR>
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_WinWidth = 45
-let Tlist_Display_Prototype = 1
+"nnoremap <silent> <F8> :TlistToggle<CR>
+"let Tlist_Exit_OnlyWindow = 1
+"let Tlist_Use_Right_Window = 1
+"let Tlist_WinWidth = 45
+"let Tlist_Display_Prototype = 1
 
-nnoremap <silent> <c-F7> :TlistAddFilesRecursive src *.cpp<CR> :TlistAddFilesRecursive include *.h<CR>
-nnoremap <silent> <F7> :TlistUpdate<CR>
+"nnoremap <silent> <c-F7> :TlistAddFilesRecursive src *.cpp<CR> :TlistAddFilesRecursive include *.h<CR>
+"nnoremap <silent> <F7> :TlistUpdate<CR>
 
+
+""""Tagbar
+
+map <F8> :Tagbar<CR>
+
+""" C++ LSP
+
+let g:deoplete#enable_at_startup = 1
+
+" setting with vim-lsp
+if executable('ccls')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(
+      \   lsp#utils#find_nearest_parent_file_directory(
+      \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
+      \ 'initialization_options': {
+      \   'highlight': { 'lsRanges' : v:true },
+      \   'cache': {'directory': stdpath('cache') . '/ccls' },
+      \ },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc', 'cxx'],
+      \ })
+endif
 
 
