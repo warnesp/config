@@ -53,6 +53,14 @@ else
     echo "No NVIM"
 fi
 
+if command -v alacritty > /dev/null
+then
+    echo "Restoring up alacritty settings"
+    cp ~/config/alacritty/* ~/.config/alacritty/ 
+else
+    echo "No alacritty"
+fi
+
 #face
 cp ~/config/home/face ~/.face
 

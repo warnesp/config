@@ -35,6 +35,14 @@ else
   echo "No nvim"
 fi
 
+if command -v alacritty > /dev/null
+then
+    echo "Backing up alacritty settings"
+    cp ~/.config/alacritty/* ~/config/alacritty/
+else
+    echo "No alacritty"
+fi
+
 # face icon
 cp ~/.face ~/config/home/face
 
