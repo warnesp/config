@@ -9,11 +9,16 @@
 general {
     colors = true
     interval = 5
+  output_format = "i3bar"
+  colors = true
+  color_good = "#50FA7B"
+  color_degraded = "#F1FA8C"
+  color_bad = "#FF5555"
 }
 
 #order += "ipv6"
 order += "cpu_usage"
-order += "cpu_temperature 0"
+#order += "cpu_temperature 0"
 #order += "load"
 order += "volume master"
 order += "disk /home"

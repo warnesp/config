@@ -206,7 +206,7 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 map <F8> :Tagbar<CR>
 
 """ C++ LSP
-"""pip3 install --user pynvim
+
 let g:deoplete#enable_at_startup = 1
 
 " setting with vim-lsp
