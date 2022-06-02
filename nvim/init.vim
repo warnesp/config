@@ -120,8 +120,8 @@ set directory=$HOME/.vim/swapfiles//
 
 """""airline status
 
-"let g:airline#extensions#tagbar#enabled = 1
-"let g:airline#extensions#taglist#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#taglist#enabled = 1
 
 
 """""NERDTree
@@ -129,10 +129,10 @@ set directory=$HOME/.vim/swapfiles//
 map <C-p> :NERDTreeToggle<CR>
 
 "start NERDTree when vim starts without a file
-autocmd vimenter StdinReadPre * let s:std_in=1
-autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd vimenter StdinReadPre * let s:std_in=1
+"autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
 	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
