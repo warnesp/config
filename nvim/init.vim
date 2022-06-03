@@ -39,6 +39,10 @@ set autoindent
 colorscheme dracula
 set background=dark
 
+"transparent background
+highlight Normal guibg=none
+highlight NonText guibg=none
+
 ""set t_Co=256
 ""set t_ut=
 
