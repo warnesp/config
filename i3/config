@@ -244,7 +244,7 @@ bindsym Control+Mod1+l exec lockscript.sh
 #exec xrandr --auto --output DP-1 --mode 1680x1050 --left-of DP-3
 #exec xrandr --auto --output eDP-1 --mode 1920x1080 --right-of DP-3
 
-exec_always --no-startup-id feh --bg-scale /home/pwarnes/.config/i3/background.jpg
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/background.jpg
 exec firefox
 #exec android-studio.sh
 
