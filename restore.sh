@@ -43,6 +43,10 @@ if command -v nvim > /dev/null
 then
     echo "Restoring NVIM settings"
 
+    # setup alternate swap location
+    mkdir -p $HOME/.vim/swapfiles
+    mkdir -p $HOME/.vim/backups
+
     mkdir -p ~/.config/nvim
     cp ~/config/nvim/* ~/.config/nvim
 
