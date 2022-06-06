@@ -40,6 +40,9 @@ bindsym $mod+Shift+q kill
 #launch firefox
 #bindsym $mod+f firefox
 
+#launch emacs client
+bindsym $mod+Shift+Return exec emclient
+
 # start dmenu (a program launcher)
 bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -244,7 +247,7 @@ bindsym Control+Mod1+l exec lockscript.sh
 #exec xrandr --auto --output DP-1 --mode 1680x1050 --left-of DP-3
 #exec xrandr --auto --output eDP-1 --mode 1920x1080 --right-of DP-3
 
-exec_always --no-startup-id feh --bg-scale ~/.config/i3/background.jpg
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/background2.jpg
 exec firefox
 #exec android-studio.sh
 

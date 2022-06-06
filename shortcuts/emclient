@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+SERVER="$(ps aux | grep "$USER.*emacs" | grep -e "--daemon=$USER" | sed -r 's/.*--daemon=([^ ]+).*/\1/')"
+
+echo $SERVER
+
+if [[ -z "$SERVER" ]] ; then
+    emacs --daemon="$SERVER"
+fi
+
+# connect an emacs client to the server
+emacsclient --create-frame --alternate-editor="" -s $USER

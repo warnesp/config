@@ -61,6 +61,14 @@ else
     echo "No alacritty"
 fi
 
+if command -v emacs > /dev/null
+then
+    echo "Restoring emacs"
+    cp ~/config/doom.d/* ~/.doom.d/
+else
+    echo "No emacs"
+fi
+
 #face
 cp ~/config/home/face ~/.face
 
