@@ -71,6 +71,12 @@ then
     echo "Restoring emacs"
     mkdir -p ~/.doom.d
     cp ~/config/doom.d/* ~/.doom.d/
+
+    if [ -f ~/.emacs.d/bin/doom ]
+    then
+        ~/.emacs.d/bin/doom sync
+    fi
+
 else
     echo "No emacs"
 fi
