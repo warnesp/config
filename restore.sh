@@ -60,6 +60,7 @@ fi
 if command -v alacritty > /dev/null
 then
     echo "Restoring up alacritty settings"
+    mkdir ~/.config/alacritty
     cp ~/config/alacritty/* ~/.config/alacritty/ 
 else
     echo "No alacritty"
@@ -68,6 +69,7 @@ fi
 if command -v emacs > /dev/null
 then
     echo "Restoring emacs"
+    mkdir -p ~/.doom.d
     cp ~/config/doom.d/* ~/.doom.d/
 else
     echo "No emacs"
@@ -75,4 +77,15 @@ fi
 
 #face
 cp ~/config/home/face ~/.face
+
+
+#setup fonts
+mkdir -p .fonts/adobe-fonts
+if [ ! -d ~/.fonts/adobe-fonts/source-code-pro ] ; then
+    echo "installing source code pro font"
+    git clone --depth 1 https://github.com/adobe-fonts/source-code-pro.git ~/.fonts/adobe-fonts/source-code-pro
+    fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
+else
+    echo "source code pro font already installed"
+fi
 
