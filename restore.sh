@@ -60,7 +60,7 @@ fi
 if command -v alacritty > /dev/null
 then
     echo "Restoring up alacritty settings"
-    mkdir ~/.config/alacritty
+    mkdir -p ~/.config/alacritty
     cp ~/config/alacritty/* ~/.config/alacritty/ 
 else
     echo "No alacritty"
