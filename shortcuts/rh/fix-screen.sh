@@ -11,7 +11,7 @@ laptopLidState=$(grep "open" /proc/acpi/button/lid/LID0/state)
 #dp3 is primary, if it exists then simply set it
 if [ -n "$dp3Exists" ]
 then
-  xrandr --output DP-3 --mode 1680x1050 
+  xrandr --output DP-3 --mode 1920x1080 
 fi
 
 #dp1 is secondary, if it exists, set it relative to DP-3
@@ -19,10 +19,10 @@ if [ -n "$dp1Exists" ]
 then
   if [ -n "$dp3Exists" ]
   then
-    xrandr --output DP-1 --mode 1680x1050 --left-of DP-3
+    xrandr --output DP-1 --mode 1920x1080 --left-of DP-3
   else
     #no DP-3, so use this as primary
-    xrandr --output DP-1 --mode 1680x1050 
+    xrandr --output DP-1 --mode 1920x1080 
   fi
 fi
 

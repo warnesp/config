@@ -12,7 +12,7 @@ then
   echo "Backing up i3 configs"
   cp -r $HOME/.config/i3 .
   cp -r $HOME/.config/i3status .
-  cp -r $HOME/.fonts/* home/fonts/.
+  cp -r $HOME/.fonts/fontawesome-webfont.ttf home/fonts/fontawesome-webfont.ttf
 else
   echo "No i3"
 fi
