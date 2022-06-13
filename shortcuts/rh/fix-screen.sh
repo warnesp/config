@@ -5,7 +5,7 @@ dp2Exists=$(xrandr | grep "^DP-2 connected" )
 dp3Exists=$(xrandr | grep "^DP-3 connected" )
 laptopMonitorExists=$(xrandr | grep "^eDP-1 connected" )
 
-laptopLidState=$(grep "open" /proc/acpi/button/lid/LID0/state)
+laptopLidState=$(grep "open" /proc/acpi/button/lid/LID*/state)
 
 
 #dp3 is primary, if it exists then simply set it
