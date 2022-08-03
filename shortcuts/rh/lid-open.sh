@@ -26,3 +26,5 @@ enable_display "DP-1"
 enable_display "DP-2"
 enable_display "DP-3"
 
+feh --bg-scale ~/.config/i3/background.jpg
+

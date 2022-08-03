@@ -102,7 +102,7 @@ set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
 
 """" C++ stuff
 "build project
-command CMake term PROD_DIR=$PWD; mkdir -p "$HOME/build/$(basename $PWD)" && cd "$HOME/build/$(basename $PWD)" && cmake $PROD_DIR -DCMAKE_EXPORT_COMPILE_COMMANDS=YES && ln -sf $HOME/build/$(basename $PWD)/compile_commands.json $PROD_DIR/compile_commands.json && make -j8
+command CMake term PROD_DIR=$PWD; mkdir -p "$HOME/build/$(basename $PWD)" && cd "$HOME/build/$(basename $PWD)" && cmake $PROD_DIR -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DCMAKE_INSTALL_PREFIX="$HOME/.local/" && ln -sf $HOME/build/$(basename $PWD)/compile_commands.json $PROD_DIR/compile_commands.json && make -j8
 map <F5> :CMake<CR>
 
 "clean project

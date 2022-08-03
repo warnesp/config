@@ -55,6 +55,6 @@ then
   fi
 fi
 
-
+feh --bg-scale ~/.config/i3/background.jpg
 
 

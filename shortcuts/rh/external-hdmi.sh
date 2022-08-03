@@ -1,2 +1,5 @@
 #!/bin/bash
-xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1
+xrandr --output HDMI-1 --same-as eDP-1
+
+feh --bg-scale ~/.config/i3/background.jpg
+
