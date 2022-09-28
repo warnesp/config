@@ -103,6 +103,9 @@ set relativenumber
 :nnoremap k kzz
 "set lazyredraw	"don't reraw during macros
 
+" Ctrl + F1
+map <F25> :set relativenumber!<CR>
+
 """" C++ stuff
 "build project
 command CMake term PROD_DIR=$PWD; mkdir -p "$HOME/build/$(basename $PWD)" && cd "$HOME/build/$(basename $PWD)" && cmake $PROD_DIR -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DCMAKE_INSTALL_PREFIX="$HOME/.local/" && ln -sf $HOME/build/$(basename $PWD)/compile_commands.json $PROD_DIR/compile_commands.json && make -j8
@@ -182,7 +185,8 @@ let g:DoxygenToolkit_briefTag_pre="\\brief "
 let g:DoxygenToolkit_paramTag_pre="\\param "
 let g:DoxygenToolkit_returnTag="\\return "
 
-map <c-F9> :Dox<CR>
+" Ctrl + F9
+map <F33> :Dox<CR>
 
 
 """"fzf
