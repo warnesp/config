@@ -98,6 +98,9 @@ set showcmd					"show cmd as we type
 set cursorline				"hilight the current line
 set wildmenu				"menu when tab complete
 set wildignore=*.swp,*.bak,*.o,.git/*,*.a,*.so,build/*
+set relativenumber
+:nnoremap j jzz
+:nnoremap k kzz
 "set lazyredraw	"don't reraw during macros
 
 """" C++ stuff
