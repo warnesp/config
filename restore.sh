@@ -3,6 +3,11 @@
 [ -f /etc/redhat-release ] && 
 echo "restoring for RHEL"
 
+if ! command -v curl > /dev/null
+then
+    echo "need curl installed"
+    exit 1
+fi
 
 ##restore config
 cp -r shortcuts $HOME/
