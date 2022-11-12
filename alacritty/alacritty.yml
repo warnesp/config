@@ -72,24 +72,26 @@ font:
   # Style can be specified to pick a specific face.
   normal:
   #  style: Light
-    # family: "Fira Code"
-    family: "Source Code Pro"
+    family: "Fira Code"
+    #family: "Source Code Pro"
+    # family: "Sauce Code Pro"
     style: Retina
 
   # The bold font face
   bold:
   #  family: Iosevka
     style: Medium
-    # family: "Fira Code"
-    family: "Source Code Pro"
+    family: "Fira Code"
+    #family: "Source Code Pro"
+    #family: "Sauce Code Pro"
 
   # The italic font face
   italic:
   #  family: Iosevka
     style: "Light Italic"
     # style: "Light Oblique"
-    # family: "Fira Code"
-    family: "Source Code Pro"
+    family: "Fira Code"
+    # family: "Sauce Code Pro"
     # style: "Medium Italic"
 
   # Point size of the font
@@ -117,7 +119,7 @@ draw_bold_text_with_bright_colors: false
 custom_cursor_colors: true
 
 import:
-  - dracula.yml
+  - ~/.config/alacritty/dracula.yml
 
 # Colors
 #colors:

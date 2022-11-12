@@ -30,7 +30,7 @@ fi
 if  command -v nvim > /dev/null
 then
   echo "Backing up nvim settings"
-  [ -d ~/.config/nvim ] && cp ~/.config/nvim/* ~/config/nvim/
+  [ -d ~/.config/nvim ] && cp -r ~/.config/nvim/* ~/config/nvim/
 else
   echo "No nvim"
 fi

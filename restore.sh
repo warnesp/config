@@ -53,7 +53,7 @@ then
     mkdir -p $HOME/.vim/backups
 
     mkdir -p ~/.config/nvim
-    cp ~/config/nvim/* ~/.config/nvim
+    cp -r ~/config/nvim/* ~/.config/nvim
 
     #install nvim plugin manager
     command -v curl > /dev/null && curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
