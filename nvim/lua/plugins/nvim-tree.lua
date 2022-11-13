@@ -6,6 +6,9 @@
 -- may need to download from https://www.nerdfonts.com/font-downloads 
 -- unzip, move to .font/firacode/, and run fc-cache -fv
 
+
+-- g? toggles help
+
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

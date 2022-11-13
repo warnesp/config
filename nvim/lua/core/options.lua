@@ -46,8 +46,6 @@ vim.opt.relativenumber = true   -- relative line numbers
 -- vim.opt.lazyredraw = true	-- don't reraw during macros
 vim.g.neoterm_autoscroll = 1    -- always scroll to the end of the command output
 
-nmap("j", "jzz")                -- center screen when moving down
-nmap("k", "kzz")                -- center screen when moving up
 
 ---- directory usage
 vim.opt.backupdir=HOME .. "/.nvim/backups//"

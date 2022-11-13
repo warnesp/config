@@ -1,9 +1,17 @@
+----------------------------
+-- NeoVim config file ------
+----------------------------
 
 -- global for home
 HOME = os.getenv("HOME")
 
+-- convience functions for mapping
+local utils = require('core/utils')
+local nmap = utils.nmap
+local imap = utils.imap
+
 -- key mappings
-F1 = "<F1>"         -- turn off help
+F1 = "<F1>"         -- toggle relative line numbers
 CtrlF1 = "<F25>"    -- toggle relative line numbers
 
 F4 = "<F4>"         -- FSwitch
@@ -17,22 +25,8 @@ CtrlF12 = "<F36>"   -- Generate C-Tags
 CtrlF = "<C-f>"     -- fzf search
 CtrlP = "<C-p>"     -- File Tree
 
--- convience functions for mapping
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-end
-
-function nmap(shortcut, command)
-  map('n', shortcut, command)
-end
-
-function imap(shortcut, command)
-  map('i', shortcut, command)
-end
-
----- Turn off F1 Help
-nmap(F1, '')
-imap(F1, '')
+nmap("j", "jzz")                -- center screen when moving down
+nmap("k", "kzz")                -- center screen when moving up
 
 -- setup plugins
 require('plugin-init')
@@ -41,7 +35,10 @@ require('plugin-init')
 require('core/options')
 require('core/autocmds')
 
+nmap(F1, "<CMD>set relativenumber!<CR>")
 nmap(CtrlF1, "<CMD>set relativenumber!<CR>")
+imap(F1, "<CMD>set relativenumber!<CR>")
+imap(CtrlF1, "<CMD>set relativenumber!<CR>")
 
 ----  C++ stuff
 require('core/cpp')
@@ -49,10 +46,7 @@ require('core/cpp')
 nmap(F5, "<CMD>CMake<CR>")
 nmap(CtrlF5, "<CMD>CleanBuild<CR>") 
 nmap(F6, '<CMD>RunTest<CR>')
-
-local ctagsFolder = HOME .. '/.config/tags/project'
-local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename $PWD) --extras=+q $PWD<CR>'
-nmap(CtrlF12, ':term mkdir -p ' .. ctagsFolder .. '; ' .. ctagsCmd)
+nmap(CtrlF12, '<CMD>CreateCtags<CR>')
 
 ---- airline status
 require('plugins/airline')
@@ -71,13 +65,16 @@ require('plugins/syntastic')
 ---- Doxygen
 require('plugins/doxygen')
 nmap(CtrlF9, "<CMD>Dox<CR>")
+imap(CtrlF9, "<CMD>Dox<CR>")
 
 ---- fzf
 require('plugins/fzf')
-nmap(CtrlF, ":GFiles<CR>")
+nmap(CtrlF, "<CMD>GFiles<CR>")
 
 ---- Tagbar
-nmap(F8, ":Tagbar<CR>")
+nmap(F8, "<CMD>Tagbar<CR>")
 
 ---- C++ LSP
 require('plugins/lsp')
+
+

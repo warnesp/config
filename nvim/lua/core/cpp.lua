@@ -14,4 +14,8 @@ vim.api.nvim_create_user_command('CleanBuild', '!PROD_DIR=$PWD; rm -rf "' .. HOM
 vim.api.nvim_create_user_command('RunTest', 'term PROD_DIR=$PWD; ctest --test-dir "' .. HOME .. '/build/$(basename $PWD)/', {})
 
 
+local ctagsFolder = HOME .. '/.config/tags/project'
+local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename $PWD) --extras=+q $PWD'
+local createCtagsFolder = 'mkdir -p ' .. ctagsFolder .. ';'
+vim.api.nvim_create_user_command('CreateCtags', ':!' .. createCtagsFolder .. ctagsCmd, {})
 
