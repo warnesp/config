@@ -1,4 +1,4 @@
-----------------------------
+---------------------------
 -- NeoVim config file ------
 ----------------------------
 
@@ -9,6 +9,12 @@ HOME = os.getenv("HOME")
 local utils = require('core/utils')
 local nmap = utils.nmap
 local imap = utils.imap
+local vmap = utils.vmap
+
+-- setup leaders
+vim.o.timeoutlen = 400
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 -- key mappings
 F1 = "<F1>"         -- toggle relative line numbers
@@ -30,6 +36,9 @@ nmap("k", "kzz")                -- center screen when moving up
 
 -- setup plugins
 require('plugin-init')
+
+---- Lead key menu
+require('plugins/leader')
 
 -- setup common stuff
 require('core/options')

@@ -16,4 +16,8 @@ function M.imap(shortcut, command)
   map('i', shortcut, command)
 end
 
+function M.vmap(shortcut, command)
+  map('v', shortcut, command)
+end
+
 return M
