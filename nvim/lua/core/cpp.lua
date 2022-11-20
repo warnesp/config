@@ -2,7 +2,9 @@
 -- Helpful C++ Stuff --
 -----------------------
 
-local checkCMake = 'if [ -f "CMakeLists.txt" ] ; then echo "In CMake project."; else echo "Not in CMake project." ; exit 0; fi;'
+local isCMakeProject = 'if [ -f "CMakeLists.txt" ] ; then echo "In CMake project."; else echo "Not in CMake project." ; exit 0; fi;'
+local isCMakeInstalled = 'if ! command -v cmake &> /dev/null ; then echo "CMake not installed" ; exit 0; fi;'
+local checkCMake = isCMakeInstalled .. isCMakeProject
 
 -- build project
 local buildFolder = HOME .. '/build/$(basename "$PWD")'
@@ -24,8 +26,9 @@ vim.api.nvim_create_user_command('RunTest', 'term ' .. checkCMake .. ' ctest --t
 
 
 -- CTags
+local ctagsInstalled = 'if ! command -v ctags &> /dev/null ; then echo "CTags not installed" ; exit 0; fi;'
 local ctagsFolder = HOME .. '/.config/tags/project'
 local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") --extras=+q "$PWD"'
 local createCtagsFolder = 'mkdir -p ' .. ctagsFolder .. ';'
-vim.api.nvim_create_user_command('CreateCtags', ':!' .. createCtagsFolder .. ctagsCmd, {})
+vim.api.nvim_create_user_command('CreateCtags', 'term ' .. ctagsInstalled .. createCtagsFolder .. ctagsCmd, {})
 
