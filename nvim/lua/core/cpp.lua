@@ -28,7 +28,7 @@ vim.api.nvim_create_user_command('RunTest', 'term ' .. checkCMake .. ' ctest --t
 -- CTags
 local ctagsInstalled = 'if ! command -v ctags &> /dev/null ; then echo "CTags not installed" ; exit 0; fi;'
 local ctagsFolder = HOME .. '/.config/tags/project'
-local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") --extras=+q "$PWD"'
+local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") --extra=+q "$PWD"'
 local createCtagsFolder = 'mkdir -p ' .. ctagsFolder .. ';'
 vim.api.nvim_create_user_command('CreateCtags', 'term ' .. ctagsInstalled .. createCtagsFolder .. ctagsCmd, {})
 
