@@ -13,12 +13,15 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   Plug('folke/which-key.nvim')
 
   -- QoL
-  Plug('tpope/vim-fugitive')
   Plug('junegunn/fzf')
   Plug('junegunn/fzf.vim')
   Plug('vim-airline/vim-airline')
   Plug('vim-airline/vim-airline-themes')
   Plug('https://github.com/Mofiqul/dracula.nvim')
+
+  -- Git
+  Plug('tpope/vim-fugitive')
+  Plug('f-person/git-blame.nvim')
 
   -- c++ stuff
   Plug('https://github.com/derekwyatt/vim-fswitch')

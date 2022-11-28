@@ -10,6 +10,7 @@ wk.register({
   p = { ":NvimTreeToggle<CR>", "File Tree" }, -- create a binding with label
   n = { ":set number!<CR>", "Line Numbers" },
   N = { ":set relativenumber!<CR>", "Relative Line Numbers" },
+  b = { ":GitBlameToggle<CR>", "Toggle git blame" },
   s = {
     name = "Search", -- optional group name
     s = {":BLines<CR>", "Text search in current buffer"},

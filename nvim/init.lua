@@ -40,6 +40,9 @@ require('plugin-init')
 ---- Lead key menu
 require('plugins/leader')
 
+-- Git
+require('plugins/gitblame')
+
 -- setup common stuff
 require('core/options')
 require('core/autocmds')
