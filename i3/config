@@ -41,7 +41,7 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+f firefox
 
 #launch emacs client
-bindsym $mod+Shift+Return exec emclient
+#bindsym $mod+Shift+Return exec emclient
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec "dmenu_run -l 20 -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
@@ -97,6 +97,11 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+#scratch pad
+bindsym $mod+minus scratchpad show
+bindsym $mod+Control+minus move scratchpad
+
+# backlight keys
 bindcode 232 exec "xbacklight -dec 10% -time 50"
 bindcode 233 exec "xbacklight -inc 10% -time 50"
 
@@ -254,8 +259,12 @@ exec_always --no-startup-id feh --bg-scale ~/.config/i3/background.jpg
 exec firefox
 #exec android-studio.sh
 
+for_window [instance="__scratchterm"] move scratchpad
+exec_always alacritty --class="__scratchterm" --title Scratch
+
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
 
 gaps inner 8
 gaps outer 3
 smart_gaps on
+
