@@ -100,3 +100,10 @@ else
     echo "source code pro font already installed"
 fi
 
+#media center stuff
+if [ "$(hostname)" = "mediacenter" ]
+then
+    echo "Restoring media center"
+    cp ~/config/media-center/Desktop/*.desktop ~/Desktop/
+fi
+

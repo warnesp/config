@@ -54,3 +54,11 @@ fi
 # face icon
 cp ~/.face ~/config/home/face
 
+# media center stuff
+if [ "$(hostname)" = "mediacenter" ]
+then
+    echo "Backing up media center stuff"
+    cp ~/Desktop/*.desktop ~/config/media-center/Desktop
+fi
+
+
