@@ -46,6 +46,7 @@ fi
 #neovim
 if command -v nvim > /dev/null
 then
+    # pip3 install --user neovim
     echo "Restoring NVIM settings"
 
     # setup alternate swap location
