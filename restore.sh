@@ -106,5 +106,7 @@ if [ "$(hostname)" = "mediacenter" ]
 then
     echo "Restoring media center"
     cp ~/config/media-center/Desktop/*.desktop ~/Desktop/
+    mkdir ~/icons/
+    cp ~/config/media-center/icons* ~/icons/
 fi
 

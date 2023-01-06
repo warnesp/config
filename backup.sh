@@ -59,6 +59,8 @@ if [ "$(hostname)" = "mediacenter" ]
 then
     echo "Backing up media center stuff"
     cp ~/Desktop/*.desktop ~/config/media-center/Desktop
+    mkdir -p ~/config/media-center/icons
+    cp ~/icons/* ~/config/media-center/icons/
 fi
 
 
