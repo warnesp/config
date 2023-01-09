@@ -18,6 +18,7 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   Plug('vim-airline/vim-airline')
   Plug('vim-airline/vim-airline-themes')
   Plug('https://github.com/Mofiqul/dracula.nvim')
+  Plug('martinda/Jenkinsfile-vim-syntax')
 
   -- Git
   Plug('tpope/vim-fugitive')
