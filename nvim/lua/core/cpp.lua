@@ -2,6 +2,8 @@
 -- Helpful C++ Stuff --
 -----------------------
 
+local utils = require('core/utils')
+
 local isCMakeProject = 'if [ -f "CMakeLists.txt" ] ; then echo "In CMake project."; else echo "Not in CMake project." ; exit 0; fi;'
 local isCMakeInstalled = 'if ! command -v cmake &> /dev/null ; then echo "CMake not installed" ; exit 0; fi;'
 local checkCMake = isCMakeInstalled .. isCMakeProject
@@ -38,3 +40,5 @@ local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctags
 local createCtagsFolder = 'mkdir -p ' .. ctagsFolder .. ';'
 vim.api.nvim_create_user_command('CreateCtags', 'term ' .. ctagsInstalled .. createCtagsFolder .. ctagsCmd, {})
 
+-- make sure to set the expected tag file into the tags property
+vim.opt.tags=ctagsFolder .. '/' .. utils.basename(vim.fn.getcwd()) 

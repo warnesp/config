@@ -20,4 +20,14 @@ function M.vmap(shortcut, command)
   map('v', shortcut, command)
 end
 
+function M.basename(path)
+    local basenameLength = (string.find(string.reverse(path),'/',0,true) - 2)
+    if basenameLength > 0 then
+        local basenameStart = string.len(path) - basenameLength
+        return string.sub(path, basenameStart)
+    else
+        return path
+    end
+end
+
 return M

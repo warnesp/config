@@ -26,6 +26,8 @@ wk.register({
       B = { ":CleanBuild<CR>", "Clean Project" },
       d = { ":Dox<CR>", "Add doxygen comment" },
       d = { ":RunTest<CR>", "Run Unit Test" },
+      n = { "<c-]>", "Go to definition Ctrl-]" },
+      N = { "<c-t>", "Go back to previous tag Ctrl-t" },
       s = { ":FSHere<CR>", "Switch files" },
       t = { ":Tagbar<CR>", "Tagbar" },
       T = { ":CreateCtags<CR>", "Create CTags" },
