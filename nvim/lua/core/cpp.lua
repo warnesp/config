@@ -33,7 +33,7 @@ local ctagsFolder = HOME .. '/.config/tags/project'
 -- extra or extras depending on version
 local ctagsExtra = '--extras=+q'
 local isRedHat = os.execute('cat /etc/redhat-release > /dev/null')
-if isRedHat == 0 then
+if isRedHat then
     ctagsExtra = '--extra=+q'
 end
 local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") ' .. ctagsExtra .. ' "$PWD"'
