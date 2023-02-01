@@ -36,7 +36,7 @@ local isRedHat = os.execute('cat /etc/redhat-release > /dev/null')
 if isRedHat then
     ctagsExtra = '--extra=+q'
 end
-local ctagsCmd = 'ctags -R --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") ' .. ctagsExtra .. ' "$PWD"'
+local ctagsCmd = 'ctags -R --exclude=.ccls-cache --sort=yes --c++-kinds=+p --fields=+iaS -f ' .. ctagsFolder .. '/$(basename "$PWD") ' .. ctagsExtra .. ' "$PWD"'
 local createCtagsFolder = 'mkdir -p ' .. ctagsFolder .. ';'
 vim.api.nvim_create_user_command('CreateCtags', 'term ' .. ctagsInstalled .. createCtagsFolder .. ctagsCmd, {})
 
