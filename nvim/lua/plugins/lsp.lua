@@ -4,6 +4,10 @@
 
 vim.g["deoplete#enable_at_startup"] = 1
 
+if vim.fn.executable('pylsp') == 1 then
+    require'lspconfig'.pylsp.setup{}
+end
+
 if vim.fn.executable('ccls') == 1 then
     local regLspServer = function() 
         local parentFolderItems = { '.ccls', 'compile_commands.json', '.git/' } -- items that should be in parent folder

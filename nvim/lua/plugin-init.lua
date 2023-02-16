@@ -45,5 +45,10 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
       Plug('vlime/vlime', { rtp = 'vim/' }) 
       Plug('kovisoft/paredit')
   end
+
+  -- python lsp
+  Plug('neovim/nvim-lspconfig')
+  Plug('deoplete-plugins/deoplete-jedi')
+
 vim.call("plug#end")
 
