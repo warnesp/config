@@ -8,6 +8,13 @@ local wk = require("which-key")
 
 wk.register({
   p = { ":NvimTreeToggle<CR>", "File Tree" }, -- create a binding with label
+  l = {
+      name = "Lisp",
+      l = {":call vlime#plugin#LoadFile(expand(\"%:p\"))<CR>", "Load File"},
+      n = {":bo vs tmp-repl<CR>|:set filetype=lisp<CR>|:setlocal buftype=nofile<CR>|:setlocal bufhidden=hide<CR>|:setlocal noswapfile<CR>", "Temp REPL"}, 
+      r = {":call vlime#server#New(v:true, get(g:, \"vlime_cl_use_terminal\", v:false))<CR>" ,"Start Server"},
+      R = {":call vlime#plugin#StopCurrentServer()<CR>" ,"Stop Server"},
+  },
   n = { ":set number!<CR>", "Line Numbers" },
   N = { ":set relativenumber!<CR>", "Relative Line Numbers" },
   b = { ":GitBlameToggle<CR>", "Toggle git blame" },
