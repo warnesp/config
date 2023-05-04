@@ -46,7 +46,7 @@ fi
 if command -v emacs > /dev/null
 then
     echo "Backing up emacs"
-    cp ~/.doom.d/* ~/config/doom.d/
+    #cp ~/.doom.d/* ~/config/doom.d/
 else
     echo "No emacs"
 fi
