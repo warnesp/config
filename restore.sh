@@ -75,14 +75,8 @@ fi
 if command -v emacs > /dev/null
 then
     echo "Restoring emacs"
-    #mkdir -p ~/.doom.d
-    #cp ~/config/doom.d/* ~/.doom.d/
-
-    #if [ -f ~/.emacs.d/bin/doom ]
-    #then
-    #    ~/.emacs.d/bin/doom sync
-    #fi
-
+    mkdir -p ~/.emacs.d
+    cp ~/config/emacs.d/* ~/.emacs.d/
 else
     echo "No emacs"
 fi
