@@ -24,11 +24,16 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   Plug('tpope/vim-fugitive')
   Plug('f-person/git-blame.nvim')
 
+  -- general lsp
+  Plug('neovim/nvim-lspconfig')
+  Plug('williamboman/nvim-lsp-installer')
+
   -- c++ stuff
   Plug('https://github.com/derekwyatt/vim-fswitch')
   Plug('https://github.com/vim-scripts/DoxygenToolkit.vim')
   Plug('scrooloose/syntastic')
   Plug('https://github.com/preservim/tagbar')
+
 
 --C++ lsp
 --  Plug 'neovim/nvim-lsp' " nvim-lsp
@@ -47,8 +52,14 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   end
 
   -- python lsp
-  Plug('neovim/nvim-lspconfig')
   Plug('deoplete-plugins/deoplete-jedi')
+
+  -- java lsp
+  Plug('mfussenegger/nvim-jdtls')
+  
+
+  -- treesitter
+  Plug('nvim-treesitter/nvim-treesitter')
 
 vim.call("plug#end")
 
