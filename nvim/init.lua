@@ -89,4 +89,6 @@ nmap(F8, "<CMD>Tagbar<CR>")
 ---- C++ LSP
 require('plugins/lsp')
 
+----- Java Lsp
+require('plugins/java')
 
