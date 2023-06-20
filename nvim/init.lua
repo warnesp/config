@@ -90,5 +90,8 @@ nmap(F8, "<CMD>Tagbar<CR>")
 require('plugins/lsp')
 
 ----- Java Lsp
-require('plugins/java')
+local isJava = os.execute('java > /dev/null')
+if isJava then
+    require('plugins/java')
+end
 
