@@ -90,8 +90,8 @@ nmap(F8, "<CMD>Tagbar<CR>")
 require('plugins/lsp')
 
 ----- Java Lsp
-local isJava = os.execute('java > /dev/null')
-if isJava then
+local isJava = vim.fn.executable('java')
+if isJava == 1 then
     require('plugins/java')
 end
 
