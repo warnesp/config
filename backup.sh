@@ -3,16 +3,40 @@
 [ -f /etc/redhat-release ] && 
   echo "backing up for RHEL"
 
+function backup() {
+    local cmd="$1"
+    local cmdConfigDir="$HOME/.config/${cmd}"
+    if command -v "${cmd}" > /dev/null
+    then
+        if [ -d "${cmdConfigDir}" ]
+        then
+            echo "Backing up ${cmd} settings"
+            cp -r "${cmdConfigDir}/" "$HOME/config/"
+        else
+            echo "No config for ${cmd} at ${cmdConfigDir}"
+        fi
+    else
+        echo "No ${cmd}"
+    fi
+}
+
 ##Backup config
 
 cp -r $HOME/shortcuts .
+
+fontAwesome="$HOME/.fonts/fontawesome-webfont.ttf"
+if [ -f "$fontAwesome" ] 
+then
+  cp -r "$fontAwesome" home/fonts/fontawesome-webfont.ttf
+else
+    echo "No fontawesome"
+fi
 
 if command -v i3 > /dev/null
 then
   echo "Backing up i3 configs"
   cp -r $HOME/.config/i3 .
   cp -r $HOME/.config/i3status .
-  cp -r $HOME/.fonts/fontawesome-webfont.ttf home/fonts/fontawesome-webfont.ttf
 else
   echo "No i3"
 fi
@@ -26,22 +50,11 @@ else
   echo "No vim"
 fi
 
-#nvim
-if  command -v nvim > /dev/null
-then
-  echo "Backing up nvim settings"
-  [ -d ~/.config/nvim ] && cp -r ~/.config/nvim/* ~/config/nvim/
-else
-  echo "No nvim"
-fi
 
-if command -v alacritty > /dev/null
-then
-    echo "Backing up alacritty settings"
-    cp ~/.config/alacritty/* ~/config/alacritty/
-else
-    echo "No alacritty"
-fi
+backup "nvim"
+backup "alacritty"
+backup "kitty"
+
 
 if command -v emacs > /dev/null
 then

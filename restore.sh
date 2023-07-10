@@ -3,6 +3,18 @@
 [ -f /etc/redhat-release ] && 
 echo "restoring for RHEL"
 
+function restore() {
+    local cmd="$1"
+    if command -v "${cmd}" > /dev/null
+    then
+        echo "Restoring up ${cmd} settings"
+        mkdir -p "$HOME/.config/${cmd}"
+        cp -r "$HOME/config/${cmd}/" "$HOME/.config/"
+    else
+        echo "No ${cmd}"
+    fi
+}
+
 if ! command -v curl > /dev/null
 then
     echo "need curl installed"
@@ -10,17 +22,19 @@ then
 fi
 
 ##restore config
-cp -r shortcuts $HOME/
+cp -r "$HOME/config/shortcuts" $HOME/
 mkdir -p $HOME/shortcuts/bin
+
+# restore fonts
+mkdir -p "$HOME/.fonts" && cp -r "$HOME/config/home/fonts/*" "$HOME/.fonts/"
 
 #i3 config
 if command -v i3 > /dev/null
 then
     echo "Restoring i3 settings"
 
-    mkdir -p "$HOME/.fonts" && cp -r home/fonts/* $HOME/.fonts/
-    cp -r i3status $HOME/.config/
-    cp -r i3 $HOME/.config/
+    cp -r "$HOME/config/i3status" $HOME/.config/
+    cp -r "$HOME/config/i3" "$HOME/.config/"
 else
     echo "No i3"
 fi
@@ -36,9 +50,14 @@ then
     mkdir -p $HOME/.vim/backups
     mkdir -p $HOME/.vim/autoload
 
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    vim +PlugInstall +q +q
+    vimPlugInstallLoc="$HOME/.vim/autoload/plug.vim"
+
+    if [ ! -f "$vimPlugInstallLoc" ]
+    then
+        curl -fLo "$vimPlugInstallLoc" --create-dirs \
+                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        vim +PlugInstall +q +q
+    fi
 else
     echo "No vim"
 fi
@@ -56,21 +75,19 @@ then
     mkdir -p ~/.config/nvim
     cp -r ~/config/nvim/* ~/.config/nvim
 
-    #install nvim plugin manager
-    command -v curl > /dev/null && curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    echo "make sure to call :PlugInstall after running nvim for the first time"
+    plugInstallLoc="$HOME/.local/share/nvim/site/autoload/plug.vim"
+    if [ ! -f "$plugInstallLoc" ] 
+    then
+        #install nvim plugin manager
+        command -v curl > /dev/null && curl -s -fLo "$plugInstallLoc" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        nvim +PlugInstall +q +q
+    fi
 else
     echo "No NVIM"
 fi
 
-if command -v alacritty > /dev/null
-then
-    echo "Restoring up alacritty settings"
-    mkdir -p ~/.config/alacritty
-    cp ~/config/alacritty/* ~/.config/alacritty/ 
-else
-    echo "No alacritty"
-fi
+restore "alacritty"
+restore "kitty"
 
 if command -v emacs > /dev/null
 then

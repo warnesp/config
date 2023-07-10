@@ -61,5 +61,9 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   -- treesitter
   Plug('nvim-treesitter/nvim-treesitter')
 
+
+  -- Kitty config file coloring
+  Plug('fladson/vim-kitty')
+
 vim.call("plug#end")
 

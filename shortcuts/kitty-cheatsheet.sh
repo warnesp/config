@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+echo "Shortcuts for the kitty terminal emulator"
+echo ""
+echo "ctrl+shift: kitty meta (km)"
+echo ""
+echo "km+z: previous shell prompt"
+echo "km+x: next shell prompt"
+echo "km+h: browse scrollback in less"
+echo "km+g: browse last cmd output"
+echo ""
+echo "km+t: new tab"
+echo "km+q: close tab"
+echo "km+alt+t: set tab title"
+echo ""
+echo "km+equal: increate font size"
+echo "km+minus: decrease font size"
+echo "km+backspace: reset font size"
+echo ""
