@@ -26,7 +26,7 @@ cp -r "$HOME/config/shortcuts" $HOME/
 mkdir -p $HOME/shortcuts/bin
 
 # restore fonts
-mkdir -p "$HOME/.fonts" && cp -r "$HOME/config/home/fonts/*" "$HOME/.fonts/"
+mkdir -p "$HOME/.fonts" && cp -r "$HOME/config/home/fonts/"* "$HOME/.fonts/"
 
 #i3 config
 if command -v i3 > /dev/null
