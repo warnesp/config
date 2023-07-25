@@ -121,3 +121,17 @@ then
     cp  ~/config/media-center/icons/* ~/icons/
 fi
 
+function restore-local() {
+    local dir="$1"
+    local orig_dir="$HOME/.local/$dir"
+    local bkup_dir=~/config/local/$dir
+    if [ -d "$bkup_dir" ] 
+    then
+        mkdir -p "$orig_dir"
+        cp "$bkup_dir"/* "$orig_dir"/
+    fi
+
+}
+
+restore-local "share/applications"
+restore-local "share/icons"
