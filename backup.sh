@@ -76,4 +76,20 @@ then
     cp ~/icons/* ~/config/media-center/icons/
 fi
 
+function backup-local() {
+    local dir="$1"
+    local orig_dir="$HOME/.local/$dir"
+    local bkup_dir=~/config/local/$dir
+
+    if [ -d "$orig_dir" ] 
+    then
+        mkdir -p "$bkup_dir"
+        cp "${orig_dir}"/* "$bkup_dir"/
+    fi
+}
+
+# backup custom desktop files/icons
+backup-local "share/applications"
+backup-local "share/icons"
+
 

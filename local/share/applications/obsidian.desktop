@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Obsidian
+Exec=/home/pwarnes/.local/bin/Obsidian.AppImage
+Icon=/home/pwarnes/.local/share/icons/obsidian.svg
+Comment=Second Brain
+Categories=Development;
