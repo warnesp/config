@@ -84,7 +84,7 @@ function backup-local() {
     if [ -d "$orig_dir" ] 
     then
         mkdir -p "$bkup_dir"
-        cp "${orig_dir}"/* "$bkup_dir"/
+        cp -r "${orig_dir}"/* "$bkup_dir"/
     fi
 }
 

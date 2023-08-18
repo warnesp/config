@@ -37,7 +37,7 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
 ---- helpfulness
-vim.opt.mouse = ""              -- disable mouse
+--vim.opt.mouse = ""              -- disable mouse
 vim.opt.showcmd	= true		    -- show cmd as we type
 vim.opt.cursorline = true		-- hilight the current line
 vim.opt.wildmenu = true			-- menu when tab complete

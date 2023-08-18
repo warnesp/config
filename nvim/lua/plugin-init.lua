@@ -27,6 +27,7 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   -- general lsp
   Plug('neovim/nvim-lspconfig')
   Plug('williamboman/nvim-lsp-installer')
+  -- :LspInstall to install an lsp
 
   -- c++ stuff
   Plug('https://github.com/derekwyatt/vim-fswitch')
@@ -56,7 +57,6 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
 
   -- java lsp
   Plug('mfussenegger/nvim-jdtls')
-  
 
   -- treesitter
   Plug('nvim-treesitter/nvim-treesitter')

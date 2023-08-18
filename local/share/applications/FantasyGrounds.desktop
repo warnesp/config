@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Fantasy Grounds
+GenericName=Fantasy Grounds
+Comment=Fantasy Grounds
+Exec=/home/pwarnes/.smiteworks/fantasygrounds/FantasyGrounds.x86_64
+Path=/home/pwarnes/.smiteworks/fantasygrounds
+Icon=/home/pwarnes/.smiteworks/fantasygrounds/FantasyGroundsIcon.png
+Terminal=false
+Type=Application
+Categories=Game

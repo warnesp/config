@@ -6,3 +6,4 @@ Exec=/home/pwarnes/.local/bin/Obsidian.AppImage
 Icon=/home/pwarnes/.local/share/icons/obsidian.svg
 Comment=Second Brain
 Categories=Development;
+MimeType=x-scheme-handler/obsidian;
