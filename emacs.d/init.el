@@ -1,139 +1,76 @@
-;; .emacs.d/init.el
-
-
-;; ===================================
-;; MELPA Package Support
-;; ===================================
-;; Enables basic packaging support
-(require 'package)
-
-;; Adds the Melpa archive to the list of available repositories
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-
-;; Initializes the package infrastructure
-(package-initialize)
-
-;; If there are no archived package contents, refresh them
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-;; Installs packages
+;;; init.el --- Spacemacs Initialization File -*- no-byte-compile: t -*-
 ;;
-;; myPackages contains a list of package names
-(defvar myPackages
-  '(better-defaults                 ;; Set up some better Emacs defaults
-    dracula-theme                   ;; alternate theme
-    elpy                            ;; Emacs Lisp Python Environment
-    flycheck                        ;; On the fly syntax checking
-    magit                           ;; Git support
-    material-theme                  ;; Theme
-    neotree                         ;; file tree
-    org                             ;; up to date org mode
-    org-bullets                     ;; utf-8 bullets for org mode
-    slime                           ;; Lisp Mode
-    which-key                       ;; display key hints
-    )
-  )
-
-;; Scans the list in myPackages
-;; If the package listed is not already installed, install it
-(mapc #'(lambda (package)
-          (unless (package-installed-p package)
-            (package-install package)))
-      myPackages)
+;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
+;;
+;; Author: Sylvain Benner <sylvain.benner@gmail.com>
+;; URL: https://github.com/syl20bnr/spacemacs
+;;
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-;; ===================================
-;; Basic Customization
-;; ===================================
+;; Without this comment emacs25 adds (package-initialize) here
+;; (package-initialize)
 
-(setq inhibit-startup-message t)    ;; Hide the startup message
-;;(load-theme 'material t)            ;; Load material theme
-(load-theme 'dracula t)            ;; Load dracula theme
-(global-linum-mode t)               ;; Enable line numbers globally
+;; Avoid garbage collection during startup.
+;; see `SPC h . dotspacemacs-gc-cons' for more info
 
-;; User-Defined init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("~/Documents/notes/chores.org" "/home/pwarnes/Documents/notes/shopping.org" "/home/pwarnes/Documents/notes/todo.org" "/home/pwarnes/Documents/notes/work.org"))
- '(package-selected-packages '(material-theme better-defaults))
- '(warning-suppress-types '((comp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(defconst emacs-start-time (current-time))
+(setq gc-cons-threshold 402653184 gc-cons-percentage 0.6)
+(load (concat (file-name-directory load-file-name) "core/core-load-paths")
+      nil (not init-file-debug))
+(load (concat spacemacs-core-directory "core-versions")
+      nil (not init-file-debug))
+(load (concat spacemacs-core-directory "core-dumper")
+      nil (not init-file-debug))
 
-;; ===================================
-;; Lisp Customization
-;; ===================================
-(setq inferior-lisp-program "sbcl")
+;; Remove compiled core files if they become stale or Emacs version has changed.
+(load (concat spacemacs-core-directory "core-compilation")
+      nil (not init-file-debug))
+(load spacemacs--last-emacs-version-file t (not init-file-debug))
+(when (or (not (string= spacemacs--last-emacs-version emacs-version))
+          (> 0 (spacemacs//dir-byte-compile-state
+                (concat spacemacs-core-directory "libs/"))))
+  (spacemacs//remove-byte-compiled-files-in-dir spacemacs-core-directory))
+;; Update saved Emacs version.
+(unless (string= spacemacs--last-emacs-version emacs-version)
+  (spacemacs//update-last-emacs-version))
 
-;; ===================================
-;; Python Customization
-;; ===================================
-(elpy-enable)
-
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; ===================================
-;; Which-key Customization
-;; ===================================
-(when (require 'which-key)
-  (which-key-mode))
-
-;; ===================================
-;; neotree Customization
-;; ===================================
-(when (require 'neotree nil t)
-  (global-set-key [f8] 'neotree-toggle)
-  (setq neo-smart-open t))
-
-;; ===================================
-;; org mode Customization
-;; ===================================
-
-(when (require 'org)
-  ;; replace ... with arrow
-  (setq org-ellipsis " ▼"
-	org-hide-emphasis-markers t)
-  ;; headings different sizes
-  (dolist (face '((org-level-1 . 1.2)
-		(org-level-2 . 1.1)
-		(org-level-3 . 1.05)
-		(org-level-4 . 1.0)
-		(org-level-5 . 1.1)
-		(org-level-6 . 1.1)
-		(org-level-7 . 1.1)
-		(org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "Liberation Sans" :weight 'regular :height (cdr face)))
-  )
-
-;; Heading bullets
-(when (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-:q
-
-(require 'org-indent)
-
-;; Fira Code
-
-;; ===================================
-;; set some defaults
-;; ===================================
-
-;; start with TODO list open if available
-(let ((todo-file "~/Documents/notes/todo.org"))
-    (when (file-exists-p todo-file)
-      (find-file todo-file)))
-
-;; User-Defined init.el ends here
-
+(if (not (version<= spacemacs-emacs-min-version emacs-version))
+    (error (concat "Your version of Emacs (%s) is too old. "
+                   "Spacemacs requires Emacs version %s or above.")
+           emacs-version spacemacs-emacs-min-version)
+  ;; Disabling file-name-handlers for a speed boost during init might seem like
+  ;; a good idea but it causes issues like
+  ;; https://github.com/syl20bnr/spacemacs/issues/11585 "Symbol's value as
+  ;; variable is void: \213" when emacs is not built having:
+  ;; `--without-compress-install`
+  (let ((please-do-not-disable-file-name-handler-alist nil))
+    (require 'core-spacemacs)
+    (spacemacs/dump-restore-load-path)
+    (configuration-layer/load-lock-file)
+    (spacemacs/init)
+    (configuration-layer/stable-elpa-init)
+    (configuration-layer/load)
+    (spacemacs-buffer/display-startup-note)
+    (spacemacs/setup-startup-hook)
+    (spacemacs/dump-eval-delayed-functions)
+    (when (and dotspacemacs-enable-server (not (spacemacs-is-dumping-p)))
+      (require 'server)
+      (when dotspacemacs-server-socket-dir
+        (setq server-socket-dir dotspacemacs-server-socket-dir))
+      (unless (server-running-p)
+        (message "Starting a server...")
+        (server-start)))))
