@@ -94,6 +94,7 @@ then
     echo "Restoring emacs"
     mkdir -p ~/.emacs.d
     cp ~/config/emacs.d/* ~/.emacs.d/
+    cp ~/config/spacemacs ~/.spacemacs
 else
     echo "No emacs"
 fi
