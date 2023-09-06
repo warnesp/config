@@ -60,6 +60,7 @@ if command -v emacs > /dev/null
 then
     echo "Backing up emacs"
     cp ~/.emacs.d/init.el ~/config/emacs.d/
+    cp ~/.spacemacs ~/config/spacemacs
 else
     echo "No emacs"
 fi
