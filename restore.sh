@@ -136,3 +136,10 @@ function restore-local() {
 
 restore-local "share/applications"
 restore-local "share/icons"
+
+if [ ! -d ~/python3-virtual ]
+then
+    mkdir -p ~/python3-virtual
+    python -m venv ~/python3-virtual
+fi
+
