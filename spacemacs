@@ -44,14 +44,14 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      helm
-     lsp
+     ;;lsp
      ;; markdown
      multiple-cursors
      org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     ;;spell-checking
      syntax-checking
      ;; version-control
      treemacs)
