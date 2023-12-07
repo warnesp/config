@@ -34,6 +34,10 @@ CtrlP = "<C-p>"     -- File Tree
 nmap("j", "jzz")                -- center screen when moving down
 nmap("k", "kzz")                -- center screen when moving up
 
+-- point to python
+vim.g.python3_host_prog = "/usr/bin/python3"
+
+
 -- setup plugins
 require('plugin-init')
 
