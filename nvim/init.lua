@@ -100,3 +100,5 @@ if isJava == 1 then
     require('plugins/java')
 end
 
+-- Lisp
+require('plugins/vlime')
