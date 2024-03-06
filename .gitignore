@@ -4,3 +4,8 @@
 *.swp
 *.swo
 *~
+
+# ignore misc stuff
+local/share/applications/mimeinfo.cache
+local/share/applications/userapp-xpdf-NBL0I2.desktop
+

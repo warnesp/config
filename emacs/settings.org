@@ -1,0 +1,100 @@
+#+title: Emacs Config File
+#+author: Paul Warnes
+* General Setup
+** Set email address
+#+BEGIN_SRC emacs-lisp
+  (setq user-mail-address "paul@warnes.us")
+#+END_SRC
+
+* Package Config
+** List of packages
+#+BEGIN_SRC emacs-lisp
+  (setq my-package-list
+	'(
+	  use-package
+	  dracula-theme
+	  projectile
+	  flycheck
+	  yasnippet
+	  lsp-mode
+	  lsp-ui
+	  lsp-java
+	  lsp-treemacs
+	  hydra
+	  company
+	  which-key
+	  dap-mode
+	  helm-lsp
+	  helm))
+#+END_SRC
+
+** Install the Selected Packages
+#+BEGIN_SRC emacs-lisp
+  (dolist (package my-package-list)
+    (unless (package-installed-p package)
+      (package-install package)))
+#+END_SRC
+
+* General Look and Feel
+** Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package dracula-theme)
+  (load-theme 'dracula t)
+#+END_SRC
+** Menu bar
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode 1)
+#+END_SRC
+** Always show line numbers
+#+BEGIN_SRC emacs-lisp
+  (global-display-line-numbers-mode 1)
+#+END_SRC
+
+** transparent background
+#+BEGIN_SRC emacs-lisp
+  (set-frame-parameter nil 'alpha-background 90)
+  (add-to-list 'default-frame-alist '(alpha-background . 90))
+#+END_SRC
+
+* General IDE Stuff
+#+BEGIN_SRC emacs-lisp
+  ;; project management
+  (use-package projectile)
+  ;; on the fly syntax checking
+  (use-package flycheck)
+  ;; code snippets
+  (use-package yasnippet
+    :config (yas-global-mode))
+  ;; lsp integration
+  (use-package lsp-mode
+    :hook ((lsp-mode . lsp-enable-which-key-integration))
+    :config (setq lsp-completion-enable-additional-text-edit nil))
+  (use-package lsp-ui)
+  ;; chain commands together, C-c j and C-c k -> C-c jjkkj
+  (use-package hydra)
+  ;; auto-completion framework
+  (use-package company)
+  ;; show commands
+  (use-package which-key
+    :config (which-key-mode))
+  ;; debug mode
+  (use-package dap-mode
+    :after lsp-mode
+    :config (dap-auto-configure-mode))
+  (use-package helm-lsp)
+  (use-package helm
+    :config (helm-mode))
+  (use-package lsp-treemacs)
+
+#+END_SRC
+
+* Java IDE Stuff
+To install a Java LSP server: C-u M-x lsp-install-server and select jdtls
+#+BEGIN_SRC emacs-lisp
+
+  (use-package lsp-java
+    :config (add-hook 'java-mode-hook 'lsp))
+  (require 'dap-java)
+
+#+END_SRC
+
