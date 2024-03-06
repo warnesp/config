@@ -59,8 +59,11 @@ backup "kitty"
 if command -v emacs > /dev/null
 then
     echo "Backing up emacs"
-    cp ~/.emacs.d/init.el ~/config/emacs.d/
-    cp ~/.spacemacs ~/config/spacemacs
+    mkdir -p ~/config/emacs/
+    cp ~/.config/emacs/init.el ~/config/emacs/init.el
+    cp ~/.config/emacs/settings.org ~/config/emacs/settings.org
+    #cp ~/.emacs.d/init.el ~/config/emacs.d/
+    #cp ~/.spacemacs ~/config/spacemacs
 else
     echo "No emacs"
 fi

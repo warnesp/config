@@ -92,9 +92,11 @@ restore "kitty"
 if command -v emacs > /dev/null
 then
     echo "Restoring emacs"
-    mkdir -p ~/.emacs.d
-    cp ~/config/emacs.d/* ~/.emacs.d/
-    cp ~/config/spacemacs ~/.spacemacs
+    mkdir -p ~/.config/emacs
+    cp ~/config/emacs/* ~/.config/emacs/
+    #mkdir -p ~/.emacs.d
+    #cp ~/config/emacs.d/* ~/.emacs.d/
+    #cp ~/config/spacemacs ~/.spacemacs
 else
     echo "No emacs"
 fi
