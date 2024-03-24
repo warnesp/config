@@ -1,7 +1,6 @@
 ---------------------------
 -- NeoVim config file ------
 ----------------------------
-
 -- global for home
 HOME = os.getenv("HOME")
 
@@ -102,3 +101,20 @@ end
 
 -- Lisp
 require('plugins/vlime')
+
+-- Org Mode
+require('orgmode').setup_ts_grammar()
+
+-- Treesitter configuration
+require('nvim-treesitter.configs').setup {
+  highlight = {
+    enable = true,
+  },
+  ensure_installed = {'org'}, -- Or run :TSUpdate org
+}
+
+require('orgmode').setup({
+  org_agenda_files = {'~/Nextcloud/Documents/org/*' },
+  org_default_notes_file = '~/Nextcloud/Documents/org/refile.org',
+})
+

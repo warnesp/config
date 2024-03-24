@@ -65,5 +65,9 @@ vim.call("plug#begin", HOME .. '/.local/share/nvim/plugged')
   -- Kitty config file coloring
   Plug('fladson/vim-kitty')
 
+  -- Emacs stuff
+  -- Org mode
+  Plug("nvim-orgmode/orgmode")
+
 vim.call("plug#end")
 
