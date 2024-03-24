@@ -15,6 +15,7 @@
 	  dracula-theme
 	  projectile
 	  flycheck
+      format-all
 	  yasnippet
 	  lsp-mode
 	  lsp-ui
@@ -25,7 +26,8 @@
 	  which-key
 	  dap-mode
 	  helm-lsp
-	  helm))
+	  helm
+      evil))
 #+END_SRC
 
 ** Install the Selected Packages
@@ -59,7 +61,11 @@
 * General IDE Stuff
 #+BEGIN_SRC emacs-lisp
   ;; project management
-  (use-package projectile)
+  (use-package projectile
+    :ensure t
+    :init (projectile-mode +1)
+    :bind (:map projectile-mode-map
+        ("C-C p" . projectile-command-map)))
   ;; on the fly syntax checking
   (use-package flycheck)
   ;; code snippets
@@ -67,13 +73,13 @@
     :config (yas-global-mode))
   ;; lsp integration
   (use-package lsp-mode
-    :hook ((lsp-mode . lsp-enable-which-key-integration))
-    :config (setq lsp-completion-enable-additional-text-edit nil))
+    :hook ((lsp-mode . lsp-enable-which-key-integration)))
   (use-package lsp-ui)
   ;; chain commands together, C-c j and C-c k -> C-c jjkkj
   (use-package hydra)
   ;; auto-completion framework
-  (use-package company)
+  (use-package company
+    :bind (("C-x j c" . company-complete)))
   ;; show commands
   (use-package which-key
     :config (which-key-mode))
@@ -85,6 +91,22 @@
   (use-package helm
     :config (helm-mode))
   (use-package lsp-treemacs)
+  (use-package magit)
+
+  (use-package format-all
+    :preface
+    (defun ian/format-code ()
+      "Auto-format whole buffer"
+      (interactive)
+      (if (derived-mode-p 'prolog-mode)
+        (prolog-indent-buffer)
+        (format-all-buffer)))
+    :config
+    (global-set-key (kbd "M-F") #'ian/format-code)
+    (add-hook 'prog-mode-hook #'format-all-ensure-formatter))
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setq indent-line-function 'insert-tab)
 
 #+END_SRC
 
@@ -97,4 +119,26 @@ To install a Java LSP server: C-u M-x lsp-install-server and select jdtls
   (require 'dap-java)
 
 #+END_SRC
+
+** Formatting
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'java-mode-hook
+    (lambda ()
+      (setq format-all-formatters
+        '(("Java" (clang-format))))))
+  (defun format-java-on-save ()
+    (when (eq major-mode 'java-mode)
+      (format-all-buffer)))
+
+  (add-hook 'before-save-hook #'format-java-on-save)
+#+END_SRC
+
+* Evil Mode
+Use vim like keybindings/modes.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'evil)
+  (evil-mode 1)
+#+END_SRC
+
 
