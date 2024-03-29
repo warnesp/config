@@ -57,6 +57,11 @@
   (set-frame-parameter nil 'alpha-background 90)
   (add-to-list 'default-frame-alist '(alpha-background . 90))
 #+END_SRC
+** Colors
+*** Compile window colors
+#+BEGIN_SRC emacs-lisp
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+#+END_SRC
 
 * General IDE Stuff
 #+BEGIN_SRC emacs-lisp
