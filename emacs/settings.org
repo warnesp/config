@@ -10,23 +10,24 @@
 ** List of packages
 #+BEGIN_SRC emacs-lisp
   (setq my-package-list
-	'(
-	  use-package
-	  dracula-theme
-	  projectile
-	  flycheck
+    '(
+      use-package
+      dracula-theme
+      projectile
+      flycheck
       format-all
-	  yasnippet
-	  lsp-mode
-	  lsp-ui
-	  lsp-java
-	  lsp-treemacs
-	  hydra
-	  company
-	  which-key
-	  dap-mode
-	  helm-lsp
-	  helm
+      yasnippet
+      lsp-mode
+      lsp-ui
+      lsp-java
+      lsp-treemacs
+      hydra
+      company
+      which-key
+      dap-mode
+      helm-lsp
+      helm
+      org-roam
       evil))
 #+END_SRC
 
@@ -146,4 +147,17 @@ Use vim like keybindings/modes.
   (evil-mode 1)
 #+END_SRC
 
+* Org Mode
+Note takiing and second brain.
+
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :custom (org-roam-directory "~/Nextcloud/Notes/roam")
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config (org-roam-setup))
+#+END_SRC
 
