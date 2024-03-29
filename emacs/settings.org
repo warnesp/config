@@ -21,6 +21,7 @@
       lsp-ui
       lsp-java
       lsp-treemacs
+      magit
       hydra
       company
       which-key
@@ -97,7 +98,7 @@
   (use-package helm
     :config (helm-mode))
   (use-package lsp-treemacs)
-  (use-package magit)
+  (use-package magit :ensure t)
 
   (use-package format-all
     :preface
