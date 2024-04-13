@@ -6,6 +6,15 @@
   (setq user-mail-address "paul@warnes.us")
 #+END_SRC
 
+** Open Config Keybinding
+#+BEGIN_SRC emacs-lisp
+  (defun edit-config ()
+    "Open the settings.org config file"
+      (interactive)
+       (find-file (concat user-emacs-directory "/settings.org")))
+
+  (keymap-global-set "C-c i" 'edit-config)
+#+END_SRC
 * Package Config
 ** List of packages
 #+BEGIN_SRC emacs-lisp
@@ -169,11 +178,20 @@ Note taking and second brain.
 Enable org-roam and basic keys
 
 #+BEGIN_SRC emacs-lisp
+  (defvar *org-roam-dir* "~/Nextcloud/Notes/roam")
+  (defun open-org-roam-toc ()
+    "Open the settings.org config file"
+      (interactive)
+       (find-file (concat *org-roam-dir* "/central.org")))
+
+  (keymap-global-set "C-c i" 'edit-config)
   (use-package org-roam
     :ensure t
-    :custom (org-roam-directory "~/Nextcloud/Notes/roam")
+    :custom (org-roam-directory *org-roam-dir*)
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
+           ("C-c n d" . org-roam-node-find)
+           ("C-c n t" . open-org-roam-toc)
            ("C-c n i" . org-roam-node-insert))
     :config (org-roam-setup))
 #+END_SRC
