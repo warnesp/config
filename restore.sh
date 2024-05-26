@@ -95,6 +95,7 @@ then
     echo "Restoring fish"
     mkdir -p ~/.config/fish
     cp ~/config/fish/* ~/.config/fish/
+    cp -r ~/config/fish/functions ~/.config/fish/
 else
     echo "No fish"
 fi
