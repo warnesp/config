@@ -89,6 +89,16 @@ fi
 restore "alacritty"
 restore "kitty"
 
+#neovim
+if command -v nvim > /dev/null
+then
+    echo "Restoring fish"
+    mkdir -p ~/.config/fish
+    cp ~/config/fish/* ~/.config/fish/
+else
+    echo "No fish"
+fi
+
 if command -v emacs > /dev/null
 then
     echo "Restoring emacs"

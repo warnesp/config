@@ -55,6 +55,14 @@ backup "nvim"
 backup "alacritty"
 backup "kitty"
 
+if command -v fish > /dev/null
+then
+    echo "Backing up fish"
+    mkdir -p ~/config/fish/
+    cp ~/.config/fish/config.fish ~/config/fish/config.fish
+else
+    echo "No fish"
+fi
 
 if command -v emacs > /dev/null
 then
