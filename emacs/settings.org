@@ -54,8 +54,8 @@ Generic install packages.
 ** Usability
 *** Always show line numbers
 #+BEGIN_SRC emacs-lisp
-  (global-display-line-numbers-mode 1)
-  (setq display-line-numbers 'relative)
+    (setq display-line-numbers-type 'relative) 
+    (global-display-line-numbers-mode 1)
 #+END_SRC
 *** Display Helpful Info 
 #+BEGIN_SRC emacs-lisp
@@ -82,6 +82,7 @@ Generic install packages.
   (menu-bar-mode 1)
 #+END_SRC
 * General IDE Stuff
+** Projects
 #+BEGIN_SRC emacs-lisp
   ;; project management
   (use-package projectile
@@ -89,21 +90,27 @@ Generic install packages.
       :init (projectile-mode +1)
       :bind (:map projectile-mode-map
           ("C-C p" . projectile-command-map)))
-  ;; on the fly syntax checking
-  (use-package flycheck
-      :ensure t)
+#+END_SRC
+** Auto complete
+#+BEGIN_SRC emacs-lisp
   ;; code snippets
   (use-package yasnippet
       :config (yas-global-mode))
+  ;; auto-completion framework
+  (use-package company
+      :bind (("C-x j c" . company-complete)))
+#+END_SRC
+** Misc
+#+BEGIN_SRC emacs-lisp
+  ;; on the fly syntax checking
+  (use-package flycheck
+      :ensure t)
   ;; lsp integration
   (use-package lsp-mode
       :hook ((lsp-mode . lsp-enable-which-key-integration)))
   (use-package lsp-ui)
   ;; chain commands together, C-c j and C-c k -> C-c jjkkj
   (use-package hydra)
-  ;; auto-completion framework
-  (use-package company
-      :bind (("C-x j c" . company-complete)))
   ;; debug mode
   (use-package dap-mode
       :after lsp-mode
@@ -202,3 +209,4 @@ Enable org-roam and basic keys
            ("C-c n i" . org-roam-node-insert))
     :config (org-roam-setup))
 #+END_SRC
+
