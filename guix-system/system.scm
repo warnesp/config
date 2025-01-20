@@ -50,8 +50,9 @@
     "git"
     "ncurses"
     "neovim"
-    "sbcl"
     "openssh-sans-x"
+    "sbcl"
+    "tree-sitter"
     "unzip"
     ))
 
@@ -60,16 +61,24 @@
     "font-misc-misc"
     "font-fira-code"))
 
+(define %hyprland-packages
+  '("hyprland"
+    "hyprland-protocols"
+    "hyprland-qtutils"
+    "hyprcursor"
+    "hyprlang"
+    "hyprutils"
+    "xdg-desktop-portal-hyprland"
+    ))
+
 (define %gui-packages
   '("acpilight"
     "flatpak"
     "flatpak-xdg-utils"
-    "hyprland"
-    "hyprland-protocols"
-    "hyprcursor"
-    "hyprlang"
+    "gnome-tweaks"
     "keepassxc"
     "kitty"
+    "nextcloud-client"
     "pavucontrol"
     "steam"
     "steam-devices-udev-rules"
@@ -78,8 +87,9 @@
     "syncthing-gtk"
     "waybar"
     "wofi"
-    "xdg-desktop-portal-hyprland"
-    "xdg-desktop-portal-gtk"
+    ;"xdg-desktop-portal"
+    "xdg-desktop-portal-wlr"
+    ;"xdg-desktop-portal-gtk"
     "xorg-server-xwayland"))
 
 (define %internet-packages
@@ -108,6 +118,7 @@
 root      ALL=(ALL) ALL
 wheel     ALL=(ALL) ALL
 pwarnes   ALL=(ALL) ALL,NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
+pwarnes2   ALL=(ALL) ALL,NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
 swarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
 ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot"))
 
@@ -130,6 +141,12 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
                   (home-directory "/home/pwarnes")
                   (supplementary-groups '("wheel" "lp" "docker" "netdev" "input" "audio" "video")))
                 (user-account
+                  (name "pwarnes2")
+                  (comment "Paul Warnes")
+                  (group "users")
+                  (home-directory "/home/pwarnes2")
+                  (supplementary-groups '("wheel" "lp" "docker" "netdev" "input" "audio" "video")))
+                (user-account
                   (name "swarnes")
                   (comment "Stephanie Warnes")
                   (group "users")
@@ -149,10 +166,12 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
 	   (append 
 	     %development-packages
 	     %font-packages
+	     %hyprland-packages
 	     %gui-packages
 	     %internet-packages
 	     %multimedia-packages
-	     %bluetooth-packages))
+	     %bluetooth-packages
+         %xfce-stuff))
       %base-packages))
 
   ;; Below is the list of system services.  To search for available
@@ -165,9 +184,9 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
 			 (auto-enable? #t)))
 	      (service containerd-service-type)
 	      (service docker-service-type)
-	      (service syncthing-service-type
-		       (syncthing-configuration
-			 (user "pwarnes")))
+	      ;(service syncthing-service-type
+		  ;     (syncthing-configuration
+			; (user "pwarnes")))
 	      (service tlp-service-type
 		       (tlp-configuration
 			 (cpu-scaling-governor-on-ac '("performance"))
@@ -191,14 +210,6 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
 	    ;; are appending to.
 	    %desktop-services))
 
-  ;(setuid-programs
-  ;  (append
-  ;    (list
-;	(file-like->setuid-program
-;	  (file-append
-;	    (specification->package "swaylock")
-;	    "/bin/swaylock")))
- ;     %setuid-programs))
 
   (bootloader (bootloader-configuration
                 (bootloader grub-efi-bootloader)

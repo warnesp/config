@@ -24,7 +24,6 @@
         "memory",
         "temperature",
         "backlight",
-        "keyboard-state",
         "battery",
         "clock",
         "tray",
@@ -50,15 +49,6 @@
              "default": ""
          }
      },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
     "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },

@@ -24,7 +24,6 @@ Generic install packages.
     '(
       use-package
       dracula-theme
-      projectile
       flycheck
       format-all
       yasnippet
@@ -35,11 +34,9 @@ Generic install packages.
       magit
       hydra
       company
-      which-key
       dap-mode
       helm-lsp
       helm
-      org-roam
       evil))
 #+END_SRC
 
@@ -59,9 +56,11 @@ Generic install packages.
 #+END_SRC
 *** Display Helpful Info 
 #+BEGIN_SRC emacs-lisp
-    ;; show commands
-    (use-package which-key
-        :config (which-key-mode))
+  ;; show commands
+  (use-package which-key
+    :ensure t
+    :diminish which-key-mode
+    :config (which-key-mode))
 #+END_SRC
 ** Theme
 #+BEGIN_SRC emacs-lisp
@@ -74,22 +73,43 @@ Generic install packages.
 #+END_SRC
 *** Transparent Background
 #+BEGIN_SRC emacs-lisp
-  (set-frame-parameter nil 'alpha-background 90)
-  (add-to-list 'default-frame-alist '(alpha-background . 90))
+;  (set-frame-parameter nil 'alpha-background 90)
+;  (add-to-list 'default-frame-alist '(alpha-background . 90))
 #+END_SRC
 ** Menu bar
 #+BEGIN_SRC emacs-lisp
   (menu-bar-mode 1)
 #+END_SRC
+** Hide minor modes
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t
+    :config
+    (diminish 'auto-revert-mode))
+#+END_SRC
+** Dired simplified listing
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1)))
+#+END_SRC
+
 * General IDE Stuff
 ** Projects
 #+BEGIN_SRC emacs-lisp
   ;; project management
   (use-package projectile
-      :ensure t
-      :init (projectile-mode +1)
-      :bind (:map projectile-mode-map
-          ("C-C p" . projectile-command-map)))
+    :ensure t
+    :init (projectile-mode +1)
+    :bind (:map projectile-mode-map
+                ("C-C p" . projectile-command-map))
+    :config
+    (setq projectile-globally-ignored-directories '("~/.cargo" "~/.rustup"))
+    (setq projectile-get-ext-command projectile-git-command)
+    )
+#+END_SRC
+** Tramp - remote connections
+#+BEGIN_SRC emacs-lisp
+  (require 'tramp)
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 #+END_SRC
 ** Auto complete
 #+BEGIN_SRC emacs-lisp
@@ -104,24 +124,29 @@ Generic install packages.
 #+BEGIN_SRC emacs-lisp
   ;; on the fly syntax checking
   (use-package flycheck
-      :ensure t)
+    :ensure t)
   ;; lsp integration
   (use-package lsp-mode
-      :hook ((lsp-mode . lsp-enable-which-key-integration)))
+    :diminish lsp-lens-mode
+    :hook ((lsp-mode . lsp-enable-which-key-integration)))
   (use-package lsp-ui)
   ;; chain commands together, C-c j and C-c k -> C-c jjkkj
   (use-package hydra)
   ;; debug mode
   (use-package dap-mode
-      :after lsp-mode
-      :config (dap-auto-configure-mode))
+    :after lsp-mode
+    :config (dap-auto-configure-mode))
   (use-package helm-lsp)
   (use-package helm
-      :config (helm-mode))
+    :diminish helm-mode
+    :config (helm-mode))
   (use-package lsp-treemacs)
 
   ;; Git integration
   (use-package magit :ensure t)
+
+  (use-package abbrev
+    :diminish abbrev-mode)
 
 #+END_SRC
 ** Formatting
@@ -153,13 +178,55 @@ Generic install packages.
 
 #+END_SRC
 
+** Sideline
+- Display items on the side
+#+BEGIN_SRC emacs-lisp
+  (use-package sideline
+  :ensure t
+    :init
+    (setq sideline-backends-left-skip-current-line t  ; don't display on current line (left)
+          sideline-backends-right-skip-current-line t ;don't display on current line (right)
+          sideline-order-left 'down                   ; or 'up
+          sideline-order-right 'up                    ; or 'down
+          sideline-format-left "%s   "                ; format for left alignment
+          sideline-format-right "   %s"               ; format for right alignment
+          sideline-priority 100                       ; overlay's priority
+          sideline-display-backend-name t             ; display the backend name
+          ))
+  (use-package sideline-flycheck
+    :hook (flycheck-mode . sideline-flycheck-setup))
+  (use-package sideline-lsp
+    :init (setq sideline-backends-right '(sideline-lsp sideline-flycheck))
+    :hook (lsp-mode . sideline-mode))
+#+END_SRC
+
+** File tree
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+    :ensure t
+    :config
+    (setq neo-window-width 55)
+    (global-set-key [f12] 'neotree-toggle))
+  (defun my/neotree-hook (_unused)
+  (linum-mode -1))
+  (add-hook 'neo-after-create-hook 'my/neotree-hook)
+#+END_SRC
+
 * Java IDE Stuff
 To install a Java LSP server: C-u M-x lsp-install-server and select jdtls
 #+BEGIN_SRC emacs-lisp
 
   (use-package lsp-java
     :ensure nil
-    :config (add-hook 'java-mode-hook 'lsp))
+    :defer 3
+    :config (add-hook 'java-mode-hook 'lsp)
+    :init
+    (setq lsp-java-save-actions-organize-imports t)
+    (setq lsp-java-vmargs '("-Xms1G" "-Xmx12G" "-XX:+UseStringDeduplication"))
+    (setq lsp-java-null-analysis-mode "automatic")
+    (setq lsp-java-null-analysis-nonnull ["jakarta.annotation.Nonnull"])
+    (setq lsp-java-null-analysis-nullable ["jakarta.annotation.Nullable"])
+    )
   (require 'dap-java)
 
 #+END_SRC
@@ -185,6 +252,24 @@ To start Sly: M-x sly
     :ensure t)
 #+END_SRC
 
+* Rust IDE Stuff
+Need to install lsp-install-server rust-analyzer
+Need to install librust-tree-setter-dev or equivelent
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :ensure t
+    :init
+    (setq rust-format-on-save t)
+    (setq rust-mode-treesitter-derive t)
+    :config
+    (add-hook 'rust-mode-hook #'lsp)
+    (add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
+    (add-hook 'rust-mode-hook (lambda () (setq indent-tabs-mode nil)))
+    )
+#+END_SRC
+
+
 * Evil Mode
 Use vim like keybindings/modes.
 
@@ -193,8 +278,44 @@ Use vim like keybindings/modes.
   (evil-mode 1)
 #+END_SRC
 
+** Escape to quit command
+#+BEGIN_SRC emacs-lisp
+  (defun minibuffer-keyboard-quit ()
+    "Abort recursive edit. In Delete Selection mode, if the mark is active, just deactivate it;
+  the it takes a second \\[keyboard-quit] to abort the minibuffer."
+    (interactive)
+    (if (and delete-selection-mode transient-mark-mode mark-active)
+        (setq deactivate-mark t)
+      (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+      (abort-recursive-edit)))
+
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+  (global-set-key [escape] 'evil-exit-emacs-state)
+
+#+END_SRC
+
+
 * Org Mode
 Note taking and second brain.
+
+** Links in same window
+#+BEGIN_SRC emacs-lisp
+  (setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
+#+END_SRC
+
+** Org Contacts
+#+BEGIN_SRC emacs-lisp
+  (use-package org-contacts
+    :ensure t
+    :after org
+    :custom (org-contacts-file '("~/Nextcloud/Notes/contacts.org")))
+#+END_SRC
 
 ** Org-Roam
 
@@ -202,10 +323,11 @@ Enable org-roam and basic keys
 
 #+BEGIN_SRC emacs-lisp
   (defvar *org-roam-dir* "~/Nextcloud/Notes/roam")
+  (defvar *org-roam-central* "central.org")
   (defun open-org-roam-toc ()
     "Open the settings.org config file"
       (interactive)
-       (find-file (concat *org-roam-dir* "/central.org")))
+       (find-file (concat *org-roam-dir* "/" *org-roam-central*)))
 
   (keymap-global-set "C-c i" 'edit-config)
   (use-package org-roam
@@ -217,5 +339,31 @@ Enable org-roam and basic keys
            ("C-c n t" . open-org-roam-toc)
            ("C-c n i" . org-roam-node-insert))
     :config (org-roam-setup))
+  (setq initial-buffer-choice (concat *org-roam-dir* "/" *org-roam-central*))
+  (org-roam-db-autosync-mode)
 #+END_SRC
 
+** Org Crypt
+Use to encrypt parts of org files under a heading using
+ : * Heading :crypt:
+ : :PROPERTIES:
+ : :CRYPTKEY: 0x123
+ : :END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq epg-pinentry-mode 'loopback)
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance '("crypt"))
+#+END_SRC
+ - Always use symetric key
+#+BEGIN_SRC emacs-lisp
+  (setq org-crypt-key nil)
+#+END_SRC
+
+Auto-saving does not cooperate with org-crypt.el: so you need to
+turn it off if you plan to use org-crypt.el quite often. Otherwise,
+you'll get an (annoying) message each time you start Org.
+
+To turn it off, but only locally use:
+ : # -*- buffer-auto-save-file-name: nil; -*-

@@ -12,7 +12,7 @@
 
 (define bash-env 
   '(("EDITOR" . "nvim")
-    ;("XDG_DATA_DIRS" . "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share")
+    ("XDG_DATA_DIRS" . "$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share")
     ;("GUIX_PROFILE" . "$HOME/.guix-profile")
     ))
 
@@ -33,9 +33,7 @@
                   "emacs" 
                   "fastfetch"
                   "git" 
-                  "neovim"
-                  "make"
-                  )))
+                  "neovim")))
     (services
       (list
         (service home-bash-service-type
@@ -52,6 +50,8 @@
     (service home-xdg-configuration-files-service-type
          `(("gdb/gdbinit" ,%default-gdbinit)
            ("nano/nanorc" ,%default-nanorc)))
+        
+
                    ))))
 
 home-config
