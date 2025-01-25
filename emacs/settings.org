@@ -49,6 +49,10 @@ Generic install packages.
 
 * General Look and Feel
 ** Usability
+*** Disable toolbar
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+#+END_SRC
 *** Always show line numbers
 #+BEGIN_SRC emacs-lisp
     (setq display-line-numbers-type 'relative) 
@@ -73,8 +77,8 @@ Generic install packages.
 #+END_SRC
 *** Transparent Background
 #+BEGIN_SRC emacs-lisp
-;  (set-frame-parameter nil 'alpha-background 90)
-;  (add-to-list 'default-frame-alist '(alpha-background . 90))
+  (set-frame-parameter nil 'alpha-background 90)
+  (add-to-list 'default-frame-alist '(alpha-background . 90))
 #+END_SRC
 ** Menu bar
 #+BEGIN_SRC emacs-lisp
@@ -202,14 +206,14 @@ Generic install packages.
 
 ** File tree
 #+BEGIN_SRC emacs-lisp
-  (use-package neotree
+  (use-package treemacs
     :ensure t
     :config
-    (setq neo-window-width 55)
-    (global-set-key [f12] 'neotree-toggle))
-  (defun my/neotree-hook (_unused)
-  (linum-mode -1))
-  (add-hook 'neo-after-create-hook 'my/neotree-hook)
+    (treemacs-project-follow-mode)
+    (global-set-key [f12] 'treemacs)
+    )
+  
+
 #+END_SRC
 
 * Java IDE Stuff
@@ -261,7 +265,7 @@ Need to install librust-tree-setter-dev or equivelent
     :ensure t
     :init
     (setq rust-format-on-save t)
-    (setq rust-mode-treesitter-derive t)
+    ;(setq rust-mode-treesitter-derive t)
     :config
     (add-hook 'rust-mode-hook #'lsp)
     (add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
@@ -274,8 +278,15 @@ Need to install librust-tree-setter-dev or equivelent
 Use vim like keybindings/modes.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'evil)
-  (evil-mode 1)
+  (use-package undo-fu
+    :ensure t)
+
+  (use-package evil
+    :init
+    (setq evil-undo-system 'undo-fu)
+    (setq evil-want-fine-undo t)
+    :config
+    (evil-mode 1))
 #+END_SRC
 
 ** Escape to quit command
