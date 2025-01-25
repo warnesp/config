@@ -1,14 +1,15 @@
 (define-module (guix-home-config)
-  #:use-module (gnu home)
-  #:use-module (gnu home services)
-  #:use-module (gnu home services desktop)
-  #:use-module (gnu home services shells)
-  #:use-module (gnu home services sound)
-  #:use-module (gnu packages)
-  #:use-module (gnu packages file)
-  #:use-module (gnu services)
-  #:use-module (gnu system shadow)
-  #:use-module (guix gexp))
+               #:use-module (gnu home)
+               #:use-module (gnu home services)
+               #:use-module (gnu home services desktop)
+               #:use-module (gnu home services dotfiles)
+               #:use-module (gnu home services shells)
+               #:use-module (gnu home services sound)
+               #:use-module (gnu packages)
+               #:use-module (gnu packages file)
+               #:use-module (gnu services)
+               #:use-module (gnu system shadow)
+               #:use-module (guix gexp))
 
 (define bash-env 
   '(("EDITOR" . "nvim")
@@ -22,7 +23,6 @@
 
 (define bashrc-files
   (list (plain-file "fzf-bindings" "source $HOME/scripts/key-bindings.bash"))
-
   )
 
 (define home-config
@@ -47,11 +47,14 @@
         (service home-files-service-type
                  `((".guile" ,%default-dotguile)
                    (".Xdefaults" ,%default-xdefaults)))
-    (service home-xdg-configuration-files-service-type
-         `(("gdb/gdbinit" ,%default-gdbinit)
-           ("nano/nanorc" ,%default-nanorc)))
-        
+        (service home-xdg-configuration-files-service-type
+                 `(("gdb/gdbinit" ,%default-gdbinit)
+                   ("nano/nanorc" ,%default-nanorc)))
+        (service home-dotfiles-service-type
+                 (home-dotfiles-configuration
+                   (directories '("./dotfiles"))))
 
-                   ))))
+
+        ))))
 
 home-config
