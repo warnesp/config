@@ -19,9 +19,11 @@
   (gnu packages fonts)
   (gnu packages linux)
   (gnu services docker)
+  (gnu services desktop)
   (gnu services pm)
   (gnu services syncthing)
   (gnu system setuid)
+  (nongnu packages firmware)
   (nongnu packages linux)
   (nongnu system linux-initrd))
 (use-service-modules dbus cups desktop docker sound networking ssh xorg)
@@ -48,12 +50,17 @@
     "emacs"
     "fzf"
     "git"
+    "libxcrypt"
     "ncurses"
     "neovim"
     "openssh-sans-x"
+    "python"
     "sbcl"
     "tree-sitter"
     "unzip"
+    ))
+(define %base-system-packages% 
+  '("fwupd-nonfree"
     ))
 
 (define %font-packages
@@ -118,7 +125,6 @@
 root      ALL=(ALL) ALL
 wheel     ALL=(ALL) ALL
 pwarnes   ALL=(ALL) ALL,NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
-pwarnes2   ALL=(ALL) ALL,NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
 swarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot
 ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run/current-system/profile/bin/loginctl,/home/pwarnes/.guix-home/profile/sbin/reboot"))
 
@@ -139,13 +145,7 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
                   (comment "Paul Warnes")
                   (group "users")
                   (home-directory "/home/pwarnes")
-                  (supplementary-groups '("wheel" "lp" "docker" "netdev" "input" "audio" "video")))
-                (user-account
-                  (name "pwarnes2")
-                  (comment "Paul Warnes")
-                  (group "users")
-                  (home-directory "/home/pwarnes2")
-                  (supplementary-groups '("wheel" "lp" "docker" "netdev" "input" "audio" "video")))
+                  (supplementary-groups '("wheel" "lp" "dialout" "docker" "netdev" "input" "audio" "video")))
                 (user-account
                   (name "swarnes")
                   (comment "Stephanie Warnes")
@@ -164,6 +164,7 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
     (append
       (map specification->package
 	   (append 
+         %base-system-packages%
 	     %development-packages
 	     %font-packages
 	     %hyprland-packages
@@ -184,6 +185,8 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
 			 (auto-enable? #t)))
 	      (service containerd-service-type)
 	      (service docker-service-type)
+          (simple-service 'fwupd-dbus dbus-root-service-type
+                (list fwupd-nonfree))
 	      ;(service syncthing-service-type
 		  ;     (syncthing-configuration
 			; (user "pwarnes")))

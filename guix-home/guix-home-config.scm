@@ -14,7 +14,7 @@
 (define bash-env 
   '(("EDITOR" . "nvim")
     ("XDG_DATA_DIRS" . "$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share")
-    ;("GUIX_PROFILE" . "$HOME/.guix-profile")
+    ("GUIX_PROFILE" . "$GUIX_PROFILE:$HOME/.guix-profile")
     ))
 
 (define bash-aliases 
