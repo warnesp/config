@@ -5,6 +5,7 @@
                #:use-module (gnu home services dotfiles)
                #:use-module (gnu home services shells)
                #:use-module (gnu home services sound)
+               #:use-module (gnu home services syncthing)
                #:use-module (gnu packages)
                #:use-module (gnu packages file)
                #:use-module (gnu services)
@@ -43,6 +44,7 @@
                    (aliases bash-aliases)))
         (service home-dbus-service-type)
         (service home-pipewire-service-type)
+        ;(service home-syncthing-service-type)
 
         (service home-files-service-type
                  `((".guile" ,%default-dotguile)
