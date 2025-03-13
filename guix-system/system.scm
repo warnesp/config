@@ -61,6 +61,7 @@
     ))
 (define %base-system-packages% 
   '("fwupd-nonfree"
+    "fprintd"
     ))
 
 (define %font-packages
@@ -100,7 +101,7 @@
     "xorg-server-xwayland"))
 
 (define %internet-packages
-  '("firefox"))
+  '("librewolf"))
 
 (define %multimedia-packages
   '("gimp"
@@ -187,9 +188,9 @@ ewarnes   ALL=(ALL) NOPASSWD:/home/pwarnes/.guix-home/profile/sbin/shutdown,/run
 	      (service docker-service-type)
           (simple-service 'fwupd-dbus dbus-root-service-type
                 (list fwupd-nonfree))
-	      ;(service syncthing-service-type
-		  ;     (syncthing-configuration
-			; (user "pwarnes")))
+	      (service syncthing-service-type
+		       (syncthing-configuration
+			 (user "pwarnes")))
 	      (service tlp-service-type
 		       (tlp-configuration
 			 (cpu-scaling-governor-on-ac '("performance"))
